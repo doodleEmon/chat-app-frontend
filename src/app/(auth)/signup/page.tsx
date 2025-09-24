@@ -7,7 +7,7 @@ export default function Signup() {
             <div>
                 <div className='flex flex-col items-center justify-center gap-2'>
                     <div className='p-3 bg-primary size-10 flex items-center justify-center rounded-full'>
-                        <BiMessage size={24}/>
+                        <BiMessage size={28}/>
                     </div>
                     <h3 className='text-2xl font-semibold'>Create Account</h3>
                     <p className='text-gray-400 text-sm'>Get started with your free account!</p>
