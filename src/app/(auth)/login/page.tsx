@@ -6,11 +6,11 @@ export default function Login() {
         <div className='min-h-screen flex items-center justify-center'>
             <div>
                 <div className='flex flex-col items-center justify-center gap-2'>
-                    <div className='p-3 bg-primary size-10 flex items-center justify-center rounded-full'>
+                    <div className='p-2 bg-primary size-12 flex items-center justify-center rounded-full'>
                         <BiMessage size={24}/>
                     </div>
-                    <h3 className='text-2xl font-semibold'>Welcome Back</h3>
-                    <p className='text-gray-400 text-sm'>Login to your account!</p>
+                    <h3 className='text-2xl font-semibold'>Welcome Back!</h3>
+                    <p className='text-gray-400 text-sm'>Login to your account.</p>
                 </div>
                 <fieldset className="fieldset rounded-box w-xs p-4 mt-4">
 
