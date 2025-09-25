@@ -51,17 +51,13 @@ export default function Signup() {
         if (!formData.password.trim()) {
             setErrorMessagePassword('Password is required!');
             isValid = false;
-        } else if (formData.password.length < 6) {
-            setErrorMessagePassword('Password must be at least 6 characters!');
+        } else if (formData.password.length < 8) {
+            setErrorMessagePassword('Password must be at least 8 characters!');
             isValid = false;
-        } else if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(formData.password)) {
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/.test(formData.password)) {
             setErrorMessagePassword('Password must contain at least 1 uppercase letter, 1 number, and 1 special character!');
             isValid = false;
         }
-
-        setErrorMessageFullname(errorMessageFullname);
-        setErrorMessageEmail(errorMessageEmail);
-        setErrorMessagePassword(errorMessagePassword);
 
         return isValid;
 
@@ -75,7 +71,7 @@ export default function Signup() {
         } else {
             console.log('Error message from fullname:', errorMessageFullname);
             console.log('Error message from email:', errorMessageEmail);
-            console.log('Error message from fullname:', errorMessagePassword);
+            console.log('Error message from password:', errorMessagePassword);
         };
     }
 
@@ -101,19 +97,19 @@ export default function Signup() {
                                 value={formData.fullname}
                                 onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
                             />
-                            <p className={`text-sm text-red-500 mt-2 ${errorMessageFullname ? 'block' : 'hidden'}`}>{errorMessageFullname ?? errorMessageFullname}</p>
+                            <p className={`text-sm text-red-500 mt-2 ${errorMessageFullname ? 'block' : 'hidden'}`}>{errorMessageFullname && errorMessageFullname}</p>
                         </div>
                     </div>
                     <div>
                         <label className="label text-sm mb-1">Email</label>
                         <input
-                            type="email"
+                            type="text"
                             className="input focus:outline-none w-full"
                             placeholder="Ex: john@gmail.com"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         />
-                        <p className={`text-sm text-red-500 mt-2 ${errorMessageFullname ? 'block' : 'hidden'}`}>{errorMessageEmail ?? errorMessageEmail}</p>
+                        <p className={`text-sm text-red-500 mt-2 ${errorMessageEmail ? 'block' : 'hidden'}`}>{errorMessageEmail && errorMessageEmail}</p>
                     </div>
                     <div>
                         <label className="label text-sm mb-1">Password</label>
@@ -128,7 +124,7 @@ export default function Signup() {
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             />
-                            <p className={`text-sm text-red-500 mt-2 ${errorMessageFullname ? 'block' : 'hidden'}`}>{errorMessagePassword ?? errorMessagePassword}</p>
+                            <p className={`text-sm text-red-500 mt-2 ${errorMessagePassword ? 'block' : 'hidden'}`}>{errorMessagePassword && errorMessagePassword}</p>
                         </div>
                     </div>
                     <button type='submit' className="btn btn-primary mt-4 rounded">Create Account</button>
