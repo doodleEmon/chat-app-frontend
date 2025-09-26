@@ -72,6 +72,7 @@ export default function Signup() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         const success = validateData();
 
         try {
@@ -92,23 +93,20 @@ export default function Signup() {
 
                 if (res.ok) {
                     setIsLoading(false);
-                    console.log("User created:", data);
                     toast.success("Account created successfully!");
                     router.push("/");
                 } else {
                     setIsLoading(false);
-                    console.error("Error:", data.message);
                     toast.error(data.message || "Signup failed!");
                 }
 
             } else {
                 setIsLoading(false);
-                toast.error('We couldn’t process your request due to invalid inputs. Kindly check and try again.')
+                toast.error("Invalid inputs. Kindly check and try again.")
             };
-        } catch (error) {
+        } catch (error: any) {
             setIsLoading(false);
-            console.error("Request failed:", error);
-            toast.error("Something went wrong, please try again later.");
+            toast.error(error.message || "Internal server error.");
         }
     }
 
