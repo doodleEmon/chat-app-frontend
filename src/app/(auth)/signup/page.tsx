@@ -3,6 +3,7 @@
 import { User } from '@/type';
 import Link from 'next/link';
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { BiMessage, BiUser } from 'react-icons/bi'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -67,7 +68,7 @@ export default function Signup() {
         e.preventDefault();
         const success = validateData();
         if (success === true) {
-            console.log('formData:', formData);
+            toast.success('Account created successfully!')
         } else {
             console.log('Error message from fullname:', errorMessageFullname);
             console.log('Error message from email:', errorMessageEmail);
