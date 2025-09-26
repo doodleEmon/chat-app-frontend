@@ -90,11 +90,12 @@ export default function Signup() {
                 })
 
                 const data = await res.json();
+                console.log("🚀 ~ handleSubmit ~ data:", data)
 
                 if (res.ok) {
                     setIsLoading(false);
                     toast.success("Account created successfully!");
-                    router.push("/");
+                    // router.push("/");
                 } else {
                     setIsLoading(false);
                     toast.error(data.message || "Signup failed!");
