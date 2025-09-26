@@ -2,6 +2,7 @@
 
 import { User } from '@/type';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { BiMessage, BiUser } from 'react-icons/bi'
@@ -17,6 +18,7 @@ export default function Signup() {
     const [errorMessageFullname, setErrorMessageFullname] = useState('');
     const [errorMessageEmail, setErrorMessageEmail] = useState('');
     const [errorMessagePassword, setErrorMessagePassword] = useState('');
+    const router = useRouter();
 
     const validateData = () => {
         let isValid = true;
@@ -64,16 +66,37 @@ export default function Signup() {
 
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const success = validateData();
-        if (success === true) {
-            toast.success('Account created successfully!')
-        } else {
-            console.log('Error message from fullname:', errorMessageFullname);
-            console.log('Error message from email:', errorMessageEmail);
-            console.log('Error message from password:', errorMessagePassword);
-        };
+
+        try {
+            if (success === true) {
+                const res = await fetch('http://localhost:5001/api/auth/signup', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData)
+                })
+                const data = await res.json();
+                console.log("🚀 ~ handleSubmit ~ data:", data)
+
+                if (res.ok) {
+                    console.log("User created:", data);
+                    toast.success("Account created successfully!");
+                    router.push("/");
+                } else {
+                    console.error("Error:", data.message);
+                    toast.error(data.message || "Signup failed!");
+                }
+            } else {
+                toast.error('Please check your input and try again.')
+            };
+        } catch (error) {
+            console.error("Request failed:", error);
+            toast.error("Something went wrong, please try again later.");
+        }
     }
 
     return (
@@ -94,7 +117,7 @@ export default function Signup() {
                             <input
                                 type="fullname"
                                 className="input focus:outline-none w-full"
-                                placeholder="John Doe"
+                                placeholder="Ex: John Doe"
                                 value={formData.fullname}
                                 onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
                             />
