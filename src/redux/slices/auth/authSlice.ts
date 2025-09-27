@@ -1,17 +1,36 @@
-import { AuthState } from "@/type";
-import { createSlice } from "@reduxjs/toolkit";
+import { signUp } from "@/redux/actions/auth/authActions";
+import { AuthResponse, AuthState } from "@/type";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: AuthState = {
     user: null,
-    loading: false,
+    loading: 'idle',
     error: null,
 };
 
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        setUser: (state, action: PayloadAction<AuthResponse>) => {
+            state.user = action.payload;
+        }
+    },
     extraReducers: (builder) => {
-
+        builder
+            .addCase(signUp.pending, (state) => {
+                state.loading = 'pending';
+            })
+            .addCase(signUp.fulfilled, (state, action) => {
+                state.loading = 'succeeded';
+                state.user = action.payload as AuthResponse;
+            })
+            .addCase(signUp.rejected, (state, action) => {
+                state.loading = 'failed';
+                state.error = action.payload as string;
+            })
     }
 })
+
+export const { setUser } = authSlice.actions;
+export default authSlice.reducer;

@@ -1,12 +1,12 @@
-export interface User {
+export interface SignupDataType {
     fullname: string;
     email: string;
-    profilePic: string;
+    password: string;
 }
 
 export interface AuthState {
     user: AuthResponse | null;
-    loading: boolean;
+    loading: 'idle' | 'pending' | 'succeeded' | 'failed';
     error: string | null;
 }
 

@@ -1,0 +1,26 @@
+'use client'
+
+import { baseUrl } from "@/constants";
+
+export async function apiCall<T>(
+    endpoint: string,
+    method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+    body?: any
+): Promise<T> {
+    const res = await fetch(`${baseUrl}${endpoint}`, {
+        method,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: body ? JSON.stringify(body) : undefined,
+    });
+    console.log(baseUrl, 'baseUrl')
+
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "API request failed");
+    }
+
+    return res.json();
+}

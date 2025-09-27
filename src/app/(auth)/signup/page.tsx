@@ -1,21 +1,19 @@
 'use client'
 
-import { User } from '@/type';
+import { signUp } from '@/redux/actions/auth/authActions';
+import { setUser } from '@/redux/slices/auth/authSlice';
+import { AppDispatch, RootState } from '@/redux/store';
+import { AuthResponse, SignupDataType } from '@/type';
+import { resolve } from 'dns';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { BiMessage, BiUser } from 'react-icons/bi'
-import { CgPassword, CgSpinner } from 'react-icons/cg';
+import { CgSpinner } from 'react-icons/cg';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { MdEmail, MdLockOutline, MdOutlineEmail } from 'react-icons/md';
-import { TfiEmail } from 'react-icons/tfi';
-
-interface SignupDataType {
-    fullname: string,
-    email: string,
-    password: string
-}
+import { MdLockOutline, MdOutlineEmail } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Signup() {
     const [formData, setFormData] = useState<SignupDataType>({
@@ -28,6 +26,8 @@ export default function Signup() {
     const [errorMessageEmail, setErrorMessageEmail] = useState('');
     const [errorMessagePassword, setErrorMessagePassword] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const dispatch = useDispatch<AppDispatch>();
+    const { user, loading, error } = useSelector((state: RootState) => state.auth)
     const router = useRouter();
 
     const validateData = () => {
@@ -80,41 +80,62 @@ export default function Signup() {
         e.preventDefault();
 
         const success = validateData();
-
-        try {
-            if (success === true) {
-
-                setIsLoading(true);
-
-                const res = await fetch('http://localhost:5001/api/auth/signup', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: "include",
-                    body: JSON.stringify(formData)
-                })
-
-                const data = await res.json();
-                console.log("🚀 ~ handleSubmit ~ data:", data)
-
-                if (res.ok) {
-                    setIsLoading(false);
-                    toast.success("Account created successfully!");
-                    // router.push("/");
-                } else {
-                    setIsLoading(false);
-                    toast.error(data.message || "Signup failed!");
-                }
-
-            } else {
-                setIsLoading(false);
-                toast.error("Kindly check input fields and try again.")
-            };
-        } catch (error: any) {
-            setIsLoading(false);
-            toast.error(error.message || "Internal server error.");
+        if (!success) {
+            toast.error("Kindly check input fields and try again.");
+            return;
         }
+
+        // dispatch signup action
+        const res = await dispatch(signUp(formData));
+        console.log("🚀 ~ handleSubmit ~ res:", res)
+
+        if (signUp.fulfilled.match(res)) {
+            dispatch(setUser(res.payload as AuthResponse)); // or resultAction.payload depending on your API
+            toast.success("Account created successfully!");
+            // router.push("/");
+        } else {
+            toast.error(error || "Account creation failed!");
+        }
+
+
+        // e.preventDefault();
+
+        // const success = validateData();
+
+        // try {
+        //     if (success === true) {
+
+        //         setIsLoading(true);
+
+        //         const res = await fetch('http://localhost:5001/api/auth/signup', {
+        //             method: "POST",
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //             credentials: "include",
+        //             body: JSON.stringify(formData)
+        //         })
+
+        //         const data = await res.json();
+        //         console.log("🚀 ~ handleSubmit ~ data:", data)
+
+        //         if (res.ok) {
+        //             setIsLoading(false);
+        //             toast.success("Account created successfully!");
+        //             // router.push("/");
+        //         } else {
+        //             setIsLoading(false);
+        //             toast.error(data.message || "Signup failed!");
+        //         }
+
+        //     } else {
+        //         setIsLoading(false);
+        //         toast.error("Kindly check input fields and try again.")
+        //     };
+        // } catch (error: any) {
+        //     setIsLoading(false);
+        //     toast.error(error.message || "Internal server error.");
+        // }
     }
 
     return (
@@ -173,7 +194,7 @@ export default function Signup() {
                         </div>
                         <p className={`text-sm text-red-500 mt-2 ${errorMessagePassword ? 'block' : 'hidden'}`}>{errorMessagePassword && errorMessagePassword}</p>
                     </div>
-                    <button type='submit' className="btn btn-primary mt-4 rounded">{isLoading ? <span className='flex items-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Creating account...</span> : <span>Create Account</span>}</button>
+                    <button type='submit' className="btn btn-primary mt-4 rounded">{loading === 'pending' ? <span className='flex items-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Creating account...</span> : <span>Create Account</span>}</button>
                 </form>
                 <div className='flex items-center justify-center mt-2'>
                     <p className='text-sm text-slate-300'>Already have an account? <Link href="/login" className='text-blue-400 hover:underline cursor-pointer'>Login</Link></p>

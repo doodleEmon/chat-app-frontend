@@ -29,13 +29,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* <ReduxProvider> */}
+        <ReduxProvider>
           {children}
           <Toaster
             position="top-right"
             reverseOrder={false}
           />
-        {/* </ReduxProvider> */}
+        </ReduxProvider>
       </body>
     </html>
   );
