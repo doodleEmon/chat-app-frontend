@@ -11,8 +11,14 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdEmail, MdLockOutline, MdOutlineEmail } from 'react-icons/md';
 import { TfiEmail } from 'react-icons/tfi';
 
+interface SignupDataType {
+    fullname: string,
+    email: string,
+    password: string
+}
+
 export default function Signup() {
-    const [formData, setFormData] = useState<User>({
+    const [formData, setFormData] = useState<SignupDataType>({
         fullname: '',
         email: '',
         password: ''
