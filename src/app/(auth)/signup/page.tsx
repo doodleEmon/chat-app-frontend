@@ -103,7 +103,7 @@ export default function Signup() {
 
             } else {
                 setIsLoading(false);
-                toast.error("Invalid inputs. Kindly check and try again.")
+                toast.error("Kindly check input fields and try again.")
             };
         } catch (error: any) {
             setIsLoading(false);

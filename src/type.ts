@@ -1,7 +1,7 @@
 export interface User {
-    fullname: string,
-    email: string,
-    password: string
+    fullname: string;
+    email: string;
+    profilePic: string;
 }
 
 export interface AuthState {
@@ -12,6 +12,7 @@ export interface AuthState {
 
 export interface AuthResponse {
     _id: string;
-    name: string;
+    fullname: string;
     email: string;
+    profilePic: string;
 }
