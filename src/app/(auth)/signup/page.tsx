@@ -4,7 +4,6 @@ import { signUp } from '@/redux/actions/auth/authActions';
 import { setUser } from '@/redux/slices/auth/authSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { AuthResponse, SignupDataType } from '@/type';
-import { resolve } from 'dns';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -25,9 +24,8 @@ export default function Signup() {
     const [errorMessageFullname, setErrorMessageFullname] = useState('');
     const [errorMessageEmail, setErrorMessageEmail] = useState('');
     const [errorMessagePassword, setErrorMessagePassword] = useState('');
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const dispatch = useDispatch<AppDispatch>();
-    const { user, loading, error } = useSelector((state: RootState) => state.auth)
+    const { loading, error } = useSelector((state: RootState) => state.auth)
     const router = useRouter();
 
     const validateData = () => {
@@ -81,61 +79,19 @@ export default function Signup() {
 
         const success = validateData();
         if (!success) {
-            toast.error("Kindly check input fields and try again.");
+            toast.error("Unable to proceed. Please provide valid information!");
             return;
         }
 
-        // dispatch signup action
         const res = await dispatch(signUp(formData));
-        console.log("🚀 ~ handleSubmit ~ res:", res)
 
         if (signUp.fulfilled.match(res)) {
-            dispatch(setUser(res.payload as AuthResponse)); // or resultAction.payload depending on your API
+            dispatch(setUser(res.payload as AuthResponse));
             toast.success("Account created successfully!");
-            // router.push("/");
+            router.push("/");
         } else {
             toast.error(error || "Account creation failed!");
         }
-
-
-        // e.preventDefault();
-
-        // const success = validateData();
-
-        // try {
-        //     if (success === true) {
-
-        //         setIsLoading(true);
-
-        //         const res = await fetch('http://localhost:5001/api/auth/signup', {
-        //             method: "POST",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //             },
-        //             credentials: "include",
-        //             body: JSON.stringify(formData)
-        //         })
-
-        //         const data = await res.json();
-        //         console.log("🚀 ~ handleSubmit ~ data:", data)
-
-        //         if (res.ok) {
-        //             setIsLoading(false);
-        //             toast.success("Account created successfully!");
-        //             // router.push("/");
-        //         } else {
-        //             setIsLoading(false);
-        //             toast.error(data.message || "Signup failed!");
-        //         }
-
-        //     } else {
-        //         setIsLoading(false);
-        //         toast.error("Kindly check input fields and try again.")
-        //     };
-        // } catch (error: any) {
-        //     setIsLoading(false);
-        //     toast.error(error.message || "Internal server error.");
-        // }
     }
 
     return (
