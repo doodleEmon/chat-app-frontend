@@ -25,7 +25,7 @@ export default function Signup() {
     const [errorMessageEmail, setErrorMessageEmail] = useState('');
     const [errorMessagePassword, setErrorMessagePassword] = useState('');
     const dispatch = useDispatch<AppDispatch>();
-    const { loading, error } = useSelector((state: RootState) => state.auth)
+    const { loading } = useSelector((state: RootState) => state.auth)
     const router = useRouter();
 
     const validateData = () => {
@@ -76,7 +76,6 @@ export default function Signup() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         const success = validateData();
         if (!success) {
             toast.error("Unable to proceed. Please provide valid information!");
@@ -90,7 +89,8 @@ export default function Signup() {
             toast.success("Account created successfully!");
             router.push("/");
         } else {
-            toast.error(error || "Account creation failed!");
+            const errorMessage = res.payload as string || "Account creation failed!";
+            toast.error(errorMessage);
         }
     }
 
