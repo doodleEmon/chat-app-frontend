@@ -2,8 +2,15 @@ import React from 'react'
 
 export default function Header() {
   return (
-    <div>
-      Header
-    </div>
+    <nav>
+      <div className='flex justify-between items-center container mx-auto'>
+        <div>
+          left
+        </div>
+        <div>
+          right
+        </div>
+      </div>
+    </nav>
   )
 }
