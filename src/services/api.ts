@@ -15,7 +15,6 @@ export async function apiCall<T>(
         credentials: "include",
         body: body ? JSON.stringify(body) : undefined,
     });
-    console.log(baseUrl, 'baseUrl')
 
     if (!res.ok) {
         const errorData = await res.json();

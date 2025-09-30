@@ -1,8 +1,83 @@
+"use client"
+
+import { login } from '@/redux/actions/auth/authActions'
+import { setUser } from '@/redux/slices/auth/authSlice'
+import { AppDispatch, RootState } from '@/redux/store'
+import { AuthResponse, LoginDataType } from '@/type'
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 import { BiMessage } from 'react-icons/bi'
+import { CgSpinner } from 'react-icons/cg'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { MdLockOutline, MdOutlineEmail } from 'react-icons/md'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Login() {
+    const [formData, setFormData] = useState<LoginDataType>({
+        email: '',
+        password: ''
+    })
+
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [errorMessageEmail, setErrorMessageEmail] = useState('');
+    const [errorMessagePassword, setErrorMessagePassword] = useState('');
+    const dispatch = useDispatch<AppDispatch>();
+    const { loading } = useSelector((state: RootState) => state.auth);
+    const router = useRouter();
+
+    const validateData = () => {
+        let isValid = true;
+
+        // reset old errors
+        setErrorMessageEmail('');
+        setErrorMessagePassword('');
+
+        // email
+        if (!formData.email.trim()) {
+            setErrorMessageEmail('Email is required!')
+            isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            setErrorMessageEmail('Enter a valid email address!')
+            isValid = false;
+        }
+
+        // password
+        if (!formData.password.trim()) {
+            setErrorMessagePassword('Password is required!');
+            isValid = false;
+        } else if (formData.password.length < 8) {
+            setErrorMessagePassword('Password must be at least 8 characters!');
+            isValid = false;
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).+$/.test(formData.password)) {
+            setErrorMessagePassword('Password must contain at least 1 uppercase letter, 1 number, and 1 special character!');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const success = validateData();
+        if (!success) {
+            toast.error("Unable to proceed. Please provide valid information!");
+            return;
+        }
+
+        const res = await dispatch(login(formData));
+
+        if (login.fulfilled.match(res)) {
+            dispatch(setUser(res.payload as AuthResponse));
+            toast.success("Login successful!");
+            router.push("/");
+        } else {
+            const errorMessage = res.payload as string || "Login failed!";
+            toast.error(errorMessage);
+        }
+    }
+
     return (
         <div className='min-h-screen flex items-center justify-center'>
             <div>
@@ -13,16 +88,39 @@ export default function Login() {
                     <h3 className='text-2xl font-semibold'>Welcome Back!</h3>
                     <p className='text-gray-400 text-sm'>Login to your account.</p>
                 </div>
-                <form className="fieldset rounded-box w-sm p-4 mt-4 space-y-3">
+                <form onSubmit={handleSubmit} className="fieldset rounded-box w-sm p-4 mt-4 space-y-3">
                     <div>
                         <label className="label text-sm mb-1">Email</label>
-                        <input type="email" className="input focus:outline-none w-full" placeholder="Ex: john@gmail.com" />
+                        <div className='relative'>
+                            <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-50" />
+                            <input
+                                type="text"
+                                className="input focus:outline-none w-full pl-8"
+                                placeholder="john@gmail.com"
+                                value={formData.email}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            />
+                        </div>
+                        <p className={`text-sm text-red-500 mt-2 ${errorMessageEmail ? 'block' : 'hidden'}`}>{errorMessageEmail && errorMessageEmail}</p>
                     </div>
                     <div>
                         <label className="label text-sm mb-1">Password</label>
-                        <input type="password" className="input focus:outline-none w-full" placeholder="********" />
+                        <div className='relative'>
+                            <MdLockOutline size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-50" />
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className="input focus:outline-none w-full pl-8"
+                                placeholder="********"
+                                value={formData.password}
+                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            />
+                            {
+                                showPassword ? <FaEye size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} right-3 top-1/2 -translate-y-1/2 z-50 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Hide password' /> : <FaEyeSlash size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} right-3 top-1/2 -translate-y-1/2 z-50 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Show password' />
+                            }
+                        </div>
+                        <p className={`text-sm text-red-500 mt-2 ${errorMessagePassword ? 'block' : 'hidden'}`}>{errorMessagePassword && errorMessagePassword}</p>
                     </div>
-                    <button className="btn btn-primary mt-4 rounded">Login</button>
+                    <button type='submit' className="btn btn-primary mt-4 rounded">{loading === 'pending' ? <span className='flex items-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Logging in...</span> : <span>Login</span>}</button>
                 </form>
                 <div className='flex items-center justify-center mt-2'>
                     <p className='text-sm text-slate-300'>Don't have any account? <Link href="/signup" className='text-blue-400 hover:underline cursor-pointer'>Create account</Link></p>
