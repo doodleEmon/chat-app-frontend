@@ -36,7 +36,6 @@ export default function Signup() {
         setErrorMessageEmail('');
         setErrorMessagePassword('');
 
-
         // full name
         if (!formData.fullname.trim()) {
             setErrorMessageFullname("Full name is required!");
@@ -71,7 +70,6 @@ export default function Signup() {
         }
 
         return isValid;
-
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
