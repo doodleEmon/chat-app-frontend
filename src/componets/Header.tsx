@@ -6,7 +6,7 @@ import { setUser } from '@/redux/slices/auth/authSlice'
 import { AppDispatch } from '@/redux/store'
 import { AuthResponse } from '@/type'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { BiLogOut, BiMessage, BiUser } from 'react-icons/bi'
 import { FiSettings } from 'react-icons/fi'
@@ -16,6 +16,7 @@ import { toast } from 'react-toastify'
 export default function Header() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     const res = await dispatch(logout());
@@ -37,24 +38,24 @@ export default function Header() {
           <div className='p-2 rounded-full bg-blue-500 flex items-center justify-center'>
             <BiMessage size={18} />
           </div>
-          <p className='text-xl font-semibold text-blue-400'>Chatty</p>
+          <p className='text-xl font-semibold text-blue-300'>Chatty</p>
         </Link>
         <div>
           <ul className='flex items-center gap-x-5'>
             <li>
-              <Link href='/settings' className='flex items-center gap-x-1'>
+              <Link href='/settings' className={`flex items-center gap-x-1 hover:text-blue-300 ${pathname === '/settings' ? 'text-blue-300' : 'text-white'}`}>
                 <FiSettings />
                 <p>Settings</p>
               </Link>
             </li>
             <li>
-              <Link href='/profile' className='flex items-center gap-x-1'>
+              <Link href='/profile' className={`flex items-center gap-x-1 hover:text-blue-300 ${pathname === '/profile' ? 'text-blue-300' : 'text-white'}`}>
                 <BiUser />
                 <p>Profile</p>
               </Link>
             </li>
             <li>
-              <button onClick={handleLogout} className='flex items-center gap-x-1 cursor-pointer' type='button'>
+              <button onClick={handleLogout} className='flex items-center gap-x-1 cursor-pointer hover:text-blue-300' type='button'>
                 <BiLogOut />
                 <p>Logout</p>
               </button>

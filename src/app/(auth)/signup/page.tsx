@@ -100,7 +100,7 @@ export default function Signup() {
                         <BiMessage size={24} />
                     </div>
                     <h3 className='text-2xl font-semibold'>Create Account</h3>
-                    <p className='text-gray-400 text-sm'>Get started with your free account!</p>
+                    <p className='text-gray-400 text-sm'>Let's chat. Get started with your free account!</p>
                 </div>
                 <form onSubmit={handleSubmit} className="fieldset rounded-box w-sm p-4 mt-4 space-y-3">
                     <div>

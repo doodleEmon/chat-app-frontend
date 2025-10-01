@@ -8,6 +8,8 @@ export function middleware(req: NextRequest) {
 
     // Public routes
     const publicRoutes = ["/login", "/signup"];
+
+    // Protected routes
     const protectedRoutes = ["/profile", "/settings"];
 
     // 1️⃣ Check if it's a public route

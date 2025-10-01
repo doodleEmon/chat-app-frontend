@@ -86,7 +86,7 @@ export default function Login() {
                         <BiMessage size={24} />
                     </div>
                     <h3 className='text-2xl font-semibold'>Welcome Back!</h3>
-                    <p className='text-gray-400 text-sm'>Login to your account.</p>
+                    <p className='text-gray-400 text-sm'>Login to your account and chat with others.</p>
                 </div>
                 <form onSubmit={handleSubmit} className="fieldset rounded-box w-sm p-4 mt-4 space-y-3">
                     <div>
