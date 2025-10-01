@@ -45,9 +45,6 @@ export const authSlice = createSlice({
             })
 
             // check auth
-            .addCase(checkAuth.pending, (state) => {
-                state.loading = 'pending';
-            })
             .addCase(checkAuth.fulfilled, (state, action) => {
                 state.user = action.payload as AuthResponse;
             })
