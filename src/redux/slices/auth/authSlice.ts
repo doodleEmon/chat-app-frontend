@@ -1,4 +1,4 @@
-import { login, signUp } from "@/redux/actions/auth/authActions";
+import { checkAuth, login, signUp } from "@/redux/actions/auth/authActions";
 import { AuthResponse, AuthState } from "@/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -12,7 +12,7 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setUser: (state, action: PayloadAction<AuthResponse>) => {
+        setUser: (state, action: PayloadAction<AuthResponse | null>) => {
             state.user = action.payload;
         }
     },
@@ -40,6 +40,18 @@ export const authSlice = createSlice({
                 state.user = action.payload as AuthResponse;
             })
             .addCase(login.rejected, (state, action) => {
+                state.loading = 'failed';
+                state.error = action.payload as string;
+            })
+
+            // check auth
+            .addCase(checkAuth.pending, (state) => {
+                state.loading = 'pending';
+            })
+            .addCase(checkAuth.fulfilled, (state, action) => {
+                state.user = action.payload as AuthResponse;
+            })
+            .addCase(checkAuth.rejected, (state, action) => {
                 state.loading = 'failed';
                 state.error = action.payload as string;
             })

@@ -1,6 +1,6 @@
 import { apiCall } from "@/services/api";
 import { LoginDataType, SignupDataType } from "@/type";
-import { createAsyncThunk } from "@reduxjs/toolkit"
+import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit"
 
 export const signUp = createAsyncThunk(
     'auth/signup',
@@ -19,6 +19,18 @@ export const login = createAsyncThunk(
     async (loginData: LoginDataType, { rejectWithValue }) => {
         try {
             const data = await apiCall("/auth/login", "POST", loginData)
+            return data;
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
+export const checkAuth = createAsyncThunk(
+    'auth/check',
+    async (_, { rejectWithValue }) => {
+        try {
+            const data = await apiCall("/auth/check", "GET")
             return data;
         } catch (error: any) {
             return rejectWithValue(error.message);
