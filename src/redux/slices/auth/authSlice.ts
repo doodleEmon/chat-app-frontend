@@ -1,4 +1,4 @@
-import { checkAuth, login, signUp } from "@/redux/actions/auth/authActions";
+import { checkAuth, login, logout, signUp } from "@/redux/actions/auth/authActions";
 import { AuthResponse, AuthState } from "@/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -46,9 +46,20 @@ export const authSlice = createSlice({
 
             // check auth
             .addCase(checkAuth.fulfilled, (state, action) => {
+                state.loading = 'succeeded';
                 state.user = action.payload as AuthResponse;
             })
             .addCase(checkAuth.rejected, (state, action) => {
+                state.loading = 'failed';
+                state.error = action.payload as string;
+            })
+
+            // logout
+            .addCase(logout.fulfilled, (state, action) => {
+                state.loading = 'succeeded';
+                state.user = null;
+            })
+            .addCase(logout.rejected, (state, action) => {
                 state.loading = 'failed';
                 state.error = action.payload as string;
             })

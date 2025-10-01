@@ -8,24 +8,29 @@ export function middleware(req: NextRequest) {
 
     // Public routes
     const publicRoutes = ["/login", "/signup"];
+    const protectedRoutes = ["/profile", "/settings"];
 
-    // 1️⃣ If logged in and tries to access login/signup → redirect to dashboard
-    if (token && publicRoutes.includes(pathname)) {
-        const dashboardUrl = new URL("/", req.url);
-        return NextResponse.redirect(dashboardUrl);
+    // 1️⃣ Check if it's a public route
+    if (publicRoutes.includes(pathname)) {
+        if (token) {
+            // If logged in, redirect to dashboard
+            return NextResponse.redirect(new URL("/", req.url));
+        }
+        // If not logged in, allow access
+        return NextResponse.next();
     }
 
-    // 2️⃣ If not logged in and trying to access protected route → redirect to login
-    const protectedRoutes = ["/", "/profile", "/settings"];
-    const isProtected = protectedRoutes.some((route) =>
+    // 2️⃣ Check if it's a protected route OR root
+    const isProtected = pathname === "/" || protectedRoutes.some(route =>
         pathname.startsWith(route)
     );
 
     if (!token && isProtected) {
-        const loginUrl = new URL("/login", req.url);
-        return NextResponse.redirect(loginUrl);
+        // If not logged in, redirect to login
+        return NextResponse.redirect(new URL("/login", req.url));
     }
 
+    // Allow access
     return NextResponse.next();
 }
 

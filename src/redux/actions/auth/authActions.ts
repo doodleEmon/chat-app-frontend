@@ -37,3 +37,15 @@ export const checkAuth = createAsyncThunk(
         }
     }
 )
+
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async (_, { rejectWithValue }) => {
+        try {
+            const data = await apiCall("/auth/logout", "POST")
+            return data;
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
