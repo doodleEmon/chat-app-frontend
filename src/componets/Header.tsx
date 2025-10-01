@@ -35,10 +35,10 @@ export default function Header() {
     <nav className='shadow'>
       <div className='flex justify-between items-center container mx-auto p-4'>
         <Link href='/' className='flex items-center gap-x-2'>
-          <div className='p-2 rounded-full bg-blue-500 flex items-center justify-center'>
-            <BiMessage size={18} />
+          <div className='p-2 rounded bg-blue-500 flex items-center justify-center'>
+            <BiMessage size={20} />
           </div>
-          <p className='text-xl font-semibold text-blue-300'>Chatty</p>
+          <p className='text-xl font-semibold text-blue-300'>Chattyfy</p>
         </Link>
         <div>
           <ul className='flex items-center gap-x-5'>

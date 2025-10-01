@@ -3,7 +3,8 @@ import React from 'react'
 export default function Profile() {
   return (
     <div>
-      this is profile
+      <h3>Profile</h3>
+      <p>Your profile information</p>
     </div>
   )
 }
