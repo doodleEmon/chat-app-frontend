@@ -7,12 +7,12 @@ import { AuthResponse, LoginDataType } from '@/type'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-import toast from 'react-hot-toast'
 import { BiMessage } from 'react-icons/bi'
 import { CgSpinner } from 'react-icons/cg'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { MdLockOutline, MdOutlineEmail } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 export default function Login() {
     const [formData, setFormData] = useState<LoginDataType>({

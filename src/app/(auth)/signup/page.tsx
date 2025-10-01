@@ -6,13 +6,13 @@ import { AppDispatch, RootState } from '@/redux/store';
 import { AuthResponse, SignupDataType } from '@/type';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
-import toast from 'react-hot-toast';
-import { BiMessage, BiUser } from 'react-icons/bi'
+import React, { useState } from 'react';
+import { BiMessage, BiUser } from 'react-icons/bi';
 import { CgSpinner } from 'react-icons/cg';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdLockOutline, MdOutlineEmail } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export default function Signup() {
     const [formData, setFormData] = useState<SignupDataType>({
