@@ -4,23 +4,34 @@ import { RootState } from '@/redux/store'
 import Image from 'next/image'
 import React from 'react'
 import { BiCamera, BiUser } from 'react-icons/bi'
-import { FaCamera } from 'react-icons/fa'
 import { MdOutlineEmail } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 
 export default function Profile() {
   const { user } = useSelector((state: RootState) => state.auth);
+
+  const handleAvatarUpload = () => {
+    
+  }
+
   return (
     <div className='flex items-center justify-center p-4 lg:p-0'>
-      <div className='w-lg mt-8'>
+      <div className='w-lg my-8'>
         <div className='bg-slate-800 p-6 rounded-lg'>
           <h3 className='text-center text-xl font-bold'>Profile</h3>
           <p className='text-sm text-center mt-2 text-slate-400'>Your profile information</p>
           <div className='mt-8 flex justify-center'>
             <div className='size-32 rounded-full object-cover relative p-1 border-2'>
-              <Image src={user?.profilePic || '/avatar.png'} alt={user?.fullname || 'User profile picture'} height={1000} width={1000} />
-              <label className='absolute right-0.5 bottom-0 z-50 bg-slate-500 p-2 rounded-full cursor-pointer'>
+              <Image src={user?.profilePic || '/avatar.png'} alt={user?.fullname || 'User profile picture'} height={1000} width={1000} priority={true} />
+              <label htmlFor='avatar_upload' className='absolute right-0.5 bottom-0 z-50 bg-slate-500 p-2 rounded-full cursor-pointer'>
                 <BiCamera size={16} />
+                <input
+                  type="file"
+                  id="avatar_upload"
+                  className='hidden'
+                  accept='image/*'
+                  onChange={handleAvatarUpload}
+                />
               </label>
             </div>
           </div>
