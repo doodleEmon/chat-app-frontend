@@ -1,6 +1,6 @@
 import { apiCall } from "@/services/api";
 import { LoginDataType, SignupDataType } from "@/type";
-import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit"
+import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const signUp = createAsyncThunk(
     'auth/signup',
