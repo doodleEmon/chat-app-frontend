@@ -15,6 +15,7 @@ export interface AuthResponse {
     fullname: string;
     email: string;
     profilePic: string;
+    createdAt: Date;
 }
 
 export interface LoginDataType {

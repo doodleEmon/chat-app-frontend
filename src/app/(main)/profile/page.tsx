@@ -49,7 +49,7 @@ export default function Profile() {
           <div className='mt-8 flex justify-center'>
             <div className='size-32 rounded-full object-contain relative p-1 border-2'>
               <Image className='rounded-full size-full' src={selectedImage || user?.profilePic || '/avatar.png'} alt={user?.fullname || 'User profile picture'} height={1000} width={1000} priority={true} />
-              <label htmlFor='avatar_upload' className='absolute right-0.5 bottom-0 z-50 bg-slate-500 p-2 rounded-full cursor-pointer'>
+              <label htmlFor='avatar_upload' className='absolute right-0.5 bottom-0 z-50 bg-slate-500 p-2 rounded-full cursor-pointer' title='Click to change profile picture'>
                 <BiCamera size={16} />
                 <input
                   type="file"
@@ -69,8 +69,8 @@ export default function Profile() {
                 type="fullname"
                 className="input focus:outline-none w-full pl-8"
                 placeholder="John Doe"
-                value={user?.fullname}
-              // onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
+                value={user?.fullname || ""}
+                readOnly
               />
             </div>
             <div className='relative'>
@@ -79,8 +79,8 @@ export default function Profile() {
                 type="text"
                 className="input focus:outline-none w-full pl-8"
                 placeholder="john@gmail.com"
-                value={user?.email}
-              // onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                value={user?.email || ""}
+                readOnly
               />
             </div>
           </div>
@@ -88,12 +88,18 @@ export default function Profile() {
         <div className='bg-slate-800 p-6 mt-4 rounded-lg space-y-3'>
           <p className='text-xl font-bold'>Profile Information</p>
           <div className='flex items-center justify-between'>
-            <p className=''>Member Since</p>
-            <p className=''>25 February, 2025</p>
+            <p>Member Since</p>
+            <p className='font-semibold'>{user?.createdAt
+              ? new Date(user.createdAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+              })
+              : ""}</p>
           </div>
           <hr />
           <div className='flex items-center justify-between'>
-            <p className=''>Account Status</p>
+            <p>Account Status</p>
             <p className='text-green-500 font-bold'>Active</p>
           </div>
         </div>
