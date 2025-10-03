@@ -1,6 +1,5 @@
 'use client'
 
-
 import { logout } from '@/redux/actions/auth/authActions'
 import { setUser } from '@/redux/slices/auth/authSlice'
 import { AppDispatch } from '@/redux/store'
