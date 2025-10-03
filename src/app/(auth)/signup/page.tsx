@@ -106,7 +106,7 @@ export default function Signup() {
                     <div>
                         <label className="label text-sm mb-1">Full Name</label>
                         <div className='relative'>
-                            <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-50" />
+                            <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
                             <input
                                 type="fullname"
                                 className="input focus:outline-none w-full pl-8"
@@ -120,7 +120,7 @@ export default function Signup() {
                     <div>
                         <label className="label text-sm mb-1">Email</label>
                         <div className='relative'>
-                            <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-50" />
+                            <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
                             <input
                                 type="text"
                                 className="input focus:outline-none w-full pl-8"
@@ -134,7 +134,7 @@ export default function Signup() {
                     <div>
                         <label className="label text-sm mb-1">Password</label>
                         <div className='relative'>
-                            <MdLockOutline size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-50" />
+                            <MdLockOutline size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
                             <input
                                 type={showPassword ? "text" : "password"}
                                 className="input focus:outline-none w-full pl-8"
@@ -143,7 +143,7 @@ export default function Signup() {
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             />
                             {
-                                showPassword ? <FaEye size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} right-3 top-1/2 -translate-y-1/2 z-50 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Hide password' /> : <FaEyeSlash size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} right-3 top-1/2 -translate-y-1/2 z-50 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Show password' />
+                                showPassword ? <FaEye size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} right-3 top-1/2 -translate-y-1/2 z-40 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Hide password' /> : <FaEyeSlash size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} right-3 top-1/2 -translate-y-1/2 z-40 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Show password' />
                             }
                         </div>
                         <p className={`text-sm text-red-500 mt-2 ${errorMessagePassword ? 'block' : 'hidden'}`}>{errorMessagePassword && errorMessagePassword}</p>

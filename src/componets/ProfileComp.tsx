@@ -49,7 +49,7 @@ export default function ProfileComp() {
                 <div className='mt-8 flex justify-center'>
                     <div className='size-32 rounded-full object-contain relative p-1 border-2'>
                         <Image className='rounded-full size-full' src={selectedImage || user?.profilePic || '/avatar.png'} alt={user?.fullname || 'User profile picture'} height={1000} width={1000} priority={true} />
-                        <label htmlFor='avatar_upload' className='absolute right-0.5 bottom-0 z-50 bg-slate-500 p-2 rounded-full cursor-pointer' title='Click to change profile picture'>
+                        <label htmlFor='avatar_upload' className='absolute right-0.5 bottom-0 z-40 bg-slate-500 p-2 rounded-full cursor-pointer' title='Click to change profile picture'>
                             <BiCamera size={16} />
                             <input
                                 type="file"
@@ -64,7 +64,7 @@ export default function ProfileComp() {
                 <p className='text-sm text-slate-400 text-center mt-4'>{loading === 'pending' ? 'Uploading image...' : 'Click the camera icon to update your photo'}</p>
                 <div className='mt-8 space-y-4'>
                     <div className='relative'>
-                        <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-50" />
+                        <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
                         <input
                             type="fullname"
                             className="input focus:outline-none w-full pl-8"
@@ -74,7 +74,7 @@ export default function ProfileComp() {
                         />
                     </div>
                     <div className='relative'>
-                        <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-50" />
+                        <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
                         <input
                             type="text"
                             className="input focus:outline-none w-full pl-8"
