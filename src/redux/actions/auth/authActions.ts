@@ -49,3 +49,15 @@ export const logout = createAsyncThunk(
         }
     }
 )
+
+export const updateProfile = createAsyncThunk(
+    'auth/update_profile',
+    async (profilePic: string | null, { rejectWithValue }) => {
+        try {
+            const data = await apiCall("/auth/update-profile", "PUT", { profilePic })
+            return data;
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+)

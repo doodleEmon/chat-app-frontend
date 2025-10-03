@@ -1,17 +1,43 @@
 'use client'
 
-import { RootState } from '@/redux/store'
+import { updateProfile } from '@/redux/actions/auth/authActions'
+import { setUser } from '@/redux/slices/auth/authSlice'
+import { AppDispatch, RootState } from '@/redux/store'
+import { AuthResponse } from '@/type'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import { BiCamera, BiUser } from 'react-icons/bi'
 import { MdOutlineEmail } from 'react-icons/md'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
 export default function Profile() {
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { loading, user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const handleAvatarUpload = () => {
-    
+  const handleAvatarUpload = (e: any) => {
+    e.preventDefault();
+
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = async () => {
+      const base64Image = reader.result as string;
+      setSelectedImage(base64Image);
+      const res = await dispatch(updateProfile(base64Image));
+
+      if (updateProfile.fulfilled.match(res)) {
+        dispatch(setUser(res.payload as AuthResponse));
+        toast.success("Image uploaded successfully!");
+      } else {
+        const errorMessage = res.payload as string || "Image upload failed!";
+        toast.error(errorMessage);
+      }
+    }
   }
 
   return (
@@ -21,8 +47,8 @@ export default function Profile() {
           <h3 className='text-center text-xl font-bold'>Profile</h3>
           <p className='text-sm text-center mt-2 text-slate-400'>Your profile information</p>
           <div className='mt-8 flex justify-center'>
-            <div className='size-32 rounded-full object-cover relative p-1 border-2'>
-              <Image src={user?.profilePic || '/avatar.png'} alt={user?.fullname || 'User profile picture'} height={1000} width={1000} priority={true} />
+            <div className='size-32 rounded-full object-contain relative p-1 border-2'>
+              <Image className='rounded-full size-full' src={selectedImage || user?.profilePic || '/avatar.png'} alt={user?.fullname || 'User profile picture'} height={1000} width={1000} priority={true} />
               <label htmlFor='avatar_upload' className='absolute right-0.5 bottom-0 z-50 bg-slate-500 p-2 rounded-full cursor-pointer'>
                 <BiCamera size={16} />
                 <input
@@ -35,7 +61,7 @@ export default function Profile() {
               </label>
             </div>
           </div>
-          <p className='text-sm text-slate-400 text-center mt-4'>Click the camera icon to update your photo</p>
+          <p className='text-sm text-slate-400 text-center mt-4'>{loading === 'pending' ? 'Uploading image...' : 'Click the camera icon to update your photo'}</p>
           <div className='mt-8 space-y-4'>
             <div className='relative'>
               <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-50" />

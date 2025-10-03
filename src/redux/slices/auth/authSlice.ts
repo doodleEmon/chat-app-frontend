@@ -1,4 +1,4 @@
-import { checkAuth, login, logout, signUp } from "@/redux/actions/auth/authActions";
+import { checkAuth, login, logout, signUp, updateProfile } from "@/redux/actions/auth/authActions";
 import { AuthResponse, AuthState } from "@/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -63,8 +63,21 @@ export const authSlice = createSlice({
                 state.loading = 'failed';
                 state.error = action.payload as string;
             })
+
+            // update profile
+            .addCase(updateProfile.pending, (state) => {
+                state.loading = 'pending';
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.loading = 'succeeded';
+                state.user = action.payload as AuthResponse;
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.loading = 'failed';
+                state.error = action.payload as string;
+            })
     }
 })
 
 export const { setUser } = authSlice.actions;
-export default authSlice.reducer;
+export default authSlice.reducer; 
