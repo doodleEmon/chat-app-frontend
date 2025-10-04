@@ -36,7 +36,7 @@ export default function Header() {
 
   return (
     <nav className='shadow'>
-      <div className='flex justify-between items-center container mx-auto p-4'>
+      <div className='flex justify-between items-center container mx-auto py-4'>
         <Link href='/' className='flex items-center gap-x-2'>
           <div className='p-2 rounded bg-blue-500 flex items-center justify-center'>
             <BiMessage size={20} />

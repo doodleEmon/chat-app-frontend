@@ -1,2 +1,34 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+.scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.scrollbar-thin:hover {
+    scrollbar-color: #1e293b transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+    background: #1e293b;
+}
+
+.scrollbar-thin::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+}
