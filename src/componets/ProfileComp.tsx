@@ -42,7 +42,7 @@ export default function ProfileComp() {
     }
 
     return (
-        <div className='w-lg my-8'>
+        <div className='w-lg mb-8 lg:mt-8'>
             <div className='bg-slate-800 p-6 rounded-lg'>
                 <h3 className='text-center text-xl font-bold'>Profile</h3>
                 <p className='text-sm text-center mt-2 text-slate-400'>Your profile information</p>
