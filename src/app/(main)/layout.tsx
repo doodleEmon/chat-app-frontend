@@ -31,8 +31,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
-          <Header />
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-1 overflow-hidden">
+              {children}
+            </main>
+          </div>
           <ToastContainer
             position="top-right"
             autoClose={4000}
