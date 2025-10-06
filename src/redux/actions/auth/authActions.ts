@@ -1,5 +1,5 @@
 import { apiCall } from "@/services/api";
-import { LoginDataType, SignupDataType } from "@/type";
+import { LoginDataType, SignupDataType } from "@/types/auth";
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const signUp = createAsyncThunk(

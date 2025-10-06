@@ -5,7 +5,7 @@ import { Provider, useDispatch } from 'react-redux'
 import { AppDispatch, store } from '@/redux/store'
 import { checkAuth } from '@/redux/actions/auth/authActions';
 import { setUser } from '@/redux/slices/auth/authSlice';
-import { AuthResponse } from '@/type';
+import { AuthResponse } from '@/types/auth';
 
 export default function ReduxProvider({ children }: { children: React.ReactNode }) {
 

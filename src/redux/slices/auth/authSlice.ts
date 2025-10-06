@@ -1,5 +1,5 @@
 import { checkAuth, login, logout, signUp, updateProfile } from "@/redux/actions/auth/authActions";
-import { AuthResponse, AuthState } from "@/type";
+import { AuthResponse, AuthState } from "@/types/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: AuthState = {

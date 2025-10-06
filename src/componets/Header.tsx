@@ -3,7 +3,7 @@
 import { logout } from '@/redux/actions/auth/authActions'
 import { setUser } from '@/redux/slices/auth/authSlice'
 import { AppDispatch } from '@/redux/store'
-import { AuthResponse } from '@/type'
+import { AuthResponse } from '@/types/auth'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useState } from 'react'

@@ -3,7 +3,7 @@
 import { updateProfile } from '@/redux/actions/auth/authActions'
 import { setUser } from '@/redux/slices/auth/authSlice'
 import { AppDispatch, RootState } from '@/redux/store'
-import { AuthResponse } from '@/type'
+import { AuthResponse } from '@/types/auth'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { BiCamera, BiUser } from 'react-icons/bi'
