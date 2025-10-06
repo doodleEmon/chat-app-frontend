@@ -10,7 +10,7 @@ export default function Home() {
     <div className="w-full h-[calc(100vh-4rem)] flex">
       <div className="w-[25%] py-5 pl-5 pr-0.5 bg-[#1D232A] border-r border-gray-700">
         <p className="flex items-center gap-x-2 pl-4">
-          <TiMessages size={24} /> <span className="font-bold text-lg">Chats</span>
+          <span className="font-bold text-lg">Chats</span>
         </p>
         <div className="h-full overflow-hidden overflow-y-scroll mt-4 mb-24 space-y-2 scrollbar-thin">
           {
