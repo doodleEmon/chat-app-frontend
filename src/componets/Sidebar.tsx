@@ -15,7 +15,7 @@ export default function Sidebar() {
                 <span className="font-bold text-lg">Chats</span>
             </p>
             <div className='w-full pr-2 mt-4 relative'>
-                <input className='bg-slate-600 py-3 pl-10 pr-3 w-full outline-blue-500 focus:outline-1 rounded-lg' type="text" name="" id="" placeholder='Search user to chat' />
+                <input className='bg-slate-600 py-3 pl-10 pr-3 w-full outline-white focus:outline-1 rounded-lg' type="text" name="" id="" placeholder='Search user to chat' />
                 <BiSearch size={18} className='absolute left-3 top-1/2 -translate-y-1/2 text-slate-400'/>
             </div>
             <div className="h-full overflow-hidden overflow-y-scroll mt-4 mb-24 space-y-2 scrollbar-thin">
