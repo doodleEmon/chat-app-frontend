@@ -8,6 +8,7 @@ const initialState: MessageState = {
     messages: [],
     usersLoading: 'idle',
     messagesLoading: 'idle',
+    selectedUser: null,
     usersError: null,
     messagesError: null,
 }
@@ -21,6 +22,9 @@ export const messageSlice = createSlice({
         },
         setMessages: (state, action: PayloadAction<Message[] | []>) => {
             state.messages = action.payload;
+        },
+        setSelectedUser: (state, action: PayloadAction<AuthResponse>) => {
+            state.selectedUser = action.payload;
         }
     },
     extraReducers: (builder) => {
