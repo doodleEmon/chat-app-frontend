@@ -5,7 +5,8 @@ export const getUsers = createAsyncThunk(
     'chat/users',
     async (_, { rejectWithValue }) => {
         try {
-            const data = await apiCall("/message/users", "GET");
+            const data = await apiCall("/messages/users", "GET");
+            console.log("🚀 ~ data:", data)
             return data;
         } catch (error: any) {
             return rejectWithValue(error.message);

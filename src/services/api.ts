@@ -4,7 +4,7 @@ import { baseUrl } from "@/constants";
 
 export async function apiCall<T>(
     endpoint: string,
-    method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+    method: "GET" | "POST" | "PUT" | "DELETE",
     body?: any
 ): Promise<T> {
     const res = await fetch(`${baseUrl}${endpoint}`, {

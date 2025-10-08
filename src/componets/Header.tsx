@@ -24,10 +24,10 @@ export default function Header() {
     const res = await dispatch(logout());
 
     if (logout.fulfilled.match(res)) {
-      setIsDrawerOpen(!isDrawerOpen);
+      // setIsDrawerOpen(!isDrawerOpen);
       dispatch(setUser(res.payload as AuthResponse));
-      toast.success("Logged out successfully!");
       router.push("/login");
+      toast.success("Logged out successfully!");
     } else {
       const errorMessage = res.payload as string || "Logged out failed!";
       toast.error(errorMessage);

@@ -70,8 +70,8 @@ export default function Login() {
 
         if (login.fulfilled.match(res)) {
             dispatch(setUser(res.payload as AuthResponse));
-            toast.success("Login successful!");
             router.push("/");
+            toast.success("Login successful!");
         } else {
             const errorMessage = res.payload as string || "Login failed!";
             toast.error(errorMessage);
