@@ -1,24 +1,23 @@
 'use client'
 
 import { getUsers } from '@/redux/actions/messages/messagesActions';
-import { setUsers } from '@/redux/slices/messages/messageSlice';
+import { setSelectedUser, setUsers } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { AuthResponse } from '@/types/auth';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { BiSearch } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import SidebarSkeleton from './SidebarSkeleton';
 
 export default function Sidebar() {
-    const { users, usersLoading } = useSelector((state: RootState) => state.message);
+    const { users, usersLoading, selectedUser } = useSelector((state: RootState) => state.message);
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         const fetchUsers = async () => {
             const res = await dispatch(getUsers());
-            console.log("🚀 ~ fetchUsers ~ res:", res)
 
             if (getUsers.fulfilled.match(res)) {
                 dispatch(setUsers(res.payload as AuthResponse[]));
@@ -46,8 +45,9 @@ export default function Sidebar() {
                     ) : users.length > 0 ? (
                         users.map((user, index) => (
                             <div
-                                key={index}
-                                className="flex items-center gap-x-4 py-2 px-3 hover:bg-slate-700 cursor-pointer"
+                                key={user._id}
+                                className={`flex items-center gap-x-4 py-2 px-3 hover:bg-slate-700 cursor-pointer rounded-lg ${selectedUser?._id === user._id ? 'bg-slate-700' : ''}`}
+                                onClick={() => dispatch(setSelectedUser(user))}
                             >
                                 <div className="size-9 object-cover border rounded-full">
                                     <Image

@@ -12,7 +12,7 @@ export interface MessageState {
     messages: Message[] | [],
     usersLoading: 'idle' | 'pending' | 'succeeded' | 'failed',
     messagesLoading: 'idle' | 'pending' | 'succeeded' | 'failed',
-    selectedUser: object | null,
+    selectedUser: AuthResponse | null,
     usersError: string | null,
     messagesError: string | null,
 }

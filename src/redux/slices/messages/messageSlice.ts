@@ -57,5 +57,5 @@ export const messageSlice = createSlice({
     }
 })
 
-export const { setUsers, setMessages } = messageSlice.actions;
+export const { setUsers, setMessages, setSelectedUser } = messageSlice.actions;
 export default messageSlice.reducer; 
