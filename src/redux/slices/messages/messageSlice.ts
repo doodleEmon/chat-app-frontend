@@ -23,7 +23,7 @@ export const messageSlice = createSlice({
         setMessages: (state, action: PayloadAction<Message[] | []>) => {
             state.messages = action.payload;
         },
-        setSelectedUser: (state, action: PayloadAction<AuthResponse>) => {
+        setSelectedUser: (state, action: PayloadAction<AuthResponse | null>) => {
             state.selectedUser = action.payload;
         }
     },

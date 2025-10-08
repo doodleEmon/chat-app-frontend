@@ -8,7 +8,7 @@ export default function EmptyChatContainer() {
                 <BiMessage size={32} className="text-white" />
             </div>
             <p className="text-lg font-semibold">Welcome to Chattyfy!</p>
-            <p className="text-sm">Send and receive message without keeping your phone online.</p>
+            <p className="text-sm">Select a conversation from sidebar to start chatting.</p>
         </div>
     )
 }

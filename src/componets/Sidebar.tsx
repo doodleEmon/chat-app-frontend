@@ -46,7 +46,7 @@ export default function Sidebar() {
                         users.map((user, index) => (
                             <div
                                 key={user._id}
-                                className={`flex items-center gap-x-4 py-2 px-3 hover:bg-slate-700 cursor-pointer rounded-lg ${selectedUser?._id === user._id ? 'bg-slate-700' : ''}`}
+                                className={`flex items-center gap-x-4 py-2 px-3 cursor-pointer rounded-lg ${selectedUser?._id === user._id ? 'bg-slate-700' : ''}`}
                                 onClick={() => dispatch(setSelectedUser(user))}
                             >
                                 <div className="size-9 object-cover border rounded-full">
