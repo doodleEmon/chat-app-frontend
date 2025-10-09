@@ -30,7 +30,7 @@ export const sendMessages = createAsyncThunk(
     'chat/sendMessages',
     async ({ receiverId, text, image }: Message, { rejectWithValue }) => {
         try {
-            const data = await apiCall(`/send/${receiverId}`, "POST", { text, image });
+            const data = await apiCall(`/messages/send/${receiverId}`, "POST", { text, image });
             return data;
         } catch (error: any) {
             return rejectWithValue(error.message);

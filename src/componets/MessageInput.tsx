@@ -1,19 +1,23 @@
 'use client';
 
-import { AppDispatch } from '@/redux/store';
+import { sendMessages } from '@/redux/actions/messages/messagesActions';
+import { setMessages } from '@/redux/slices/messages/messageSlice';
+import { AppDispatch, RootState } from '@/redux/store';
+import { MessageResponse } from '@/types/messages';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react'
 import { ImCross } from 'react-icons/im';
 import { IoSendSharp } from 'react-icons/io5'
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 export default function MessageInput() {
-    const [text, setText] = useState<string>("");
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [text, setText] = useState<string | "">("");
+    const [imagePreview, setImagePreview] = useState<string | "">("");
     const fileInputRef = useRef(null);
-    const diapatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch<AppDispatch>();
+    const { selectedUser } = useSelector((state: RootState) => state.message);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -35,11 +39,35 @@ export default function MessageInput() {
     }
 
     const removeImage = () => {
-        setImagePreview(null);
-        if (fileInputRef.current) fileInputRef.current = null
+        setImagePreview("");
+        if (fileInputRef.current) fileInputRef.current = null;
     }
 
-    const handleSubmitMessage = () => {
+    const handleSubmitMessage = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!text.trim() && !imagePreview) return;
+
+        if (!selectedUser) return;
+
+        const formData = {
+            receiverId: selectedUser._id,
+            text: text.trim(),
+            image: imagePreview
+        }
+
+        const res = await dispatch(sendMessages(formData));
+
+        if (sendMessages.fulfilled.match(res)) {
+            dispatch(setMessages(res.payload as MessageResponse[]));
+
+            // clear form
+            setText("");
+            setImagePreview("");
+        } else {
+            const errorMessage = res.payload as string || "Have some issue!";
+            toast.error(errorMessage);
+        }
 
     }
 
@@ -87,7 +115,7 @@ export default function MessageInput() {
                 <button
                     type='submit'
                     className='cursor-pointer disabled:text-gray-600 disabled:cursor-not-allowed'
-                    disabled={text.trim() === "" && imagePreview === null}
+                    disabled={text.trim() === "" && imagePreview === ""}
                 >
                     <IoSendSharp size={20} className={`${text.trim() === "" && imagePreview === null}`} />
                 </button>

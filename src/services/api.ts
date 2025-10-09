@@ -20,6 +20,6 @@ export async function apiCall<T>(
         const errorData = await res.json();
         throw new Error(errorData.message || "API request failed");
     }
-
+    
     return res.json();
 }

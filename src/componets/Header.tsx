@@ -2,8 +2,9 @@
 
 import { logout } from '@/redux/actions/auth/authActions'
 import { setUser } from '@/redux/slices/auth/authSlice'
-import { AppDispatch } from '@/redux/store'
+import { AppDispatch, RootState } from '@/redux/store'
 import { AuthResponse } from '@/types/auth'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -11,7 +12,7 @@ import { BiCross, BiLogOut, BiMessage, BiUser } from 'react-icons/bi'
 import { FiSettings } from 'react-icons/fi'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { ImCross } from 'react-icons/im'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 export default function Header() {
@@ -19,9 +20,9 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = async (e: React.MouseEvent) => {
-
     e.preventDefault();
 
     const res = await dispatch(logout());
@@ -49,15 +50,19 @@ export default function Header() {
         <div className='hidden md:block'>
           <ul className='flex items-center gap-x-5'>
             <li>
-              <Link href='/settings' className={`flex items-center gap-x-1 hover:text-blue-300 ${pathname === '/settings' ? 'text-blue-300' : 'text-white'}`}>
-                <FiSettings />
-                <p>Settings</p>
+              <Link href='/profile' className={`flex items-center gap-x-2 hover:text-blue-300 ${pathname === '/profile' ? 'text-blue-300' : 'text-white'}`}>
+                {
+                  user?.profilePic ? <div className='size-7 object-cover overflow-hidden rounded-full border p-[1px]'>
+                    <Image className='rounded-full' src={user.profilePic} alt={user.fullname} width={1000} height={1000} />
+                  </div> : <BiUser />
+                }
+                <p>{user?.fullname}</p>
               </Link>
             </li>
             <li>
-              <Link href='/profile' className={`flex items-center gap-x-1 hover:text-blue-300 ${pathname === '/profile' ? 'text-blue-300' : 'text-white'}`}>
-                <BiUser />
-                <p>Profile</p>
+              <Link href='/settings' className={`flex items-center gap-x-1 hover:text-blue-300 ${pathname === '/settings' ? 'text-blue-300' : 'text-white'}`}>
+                <FiSettings />
+                <p>Settings</p>
               </Link>
             </li>
             <li>
@@ -88,15 +93,19 @@ export default function Header() {
           <hr className='mt-4' />
           <ul className='flex flex-col gap-y-4 mt-4 px-10'>
             <li>
-              <Link href='/settings' onClick={() => setIsDrawerOpen((open) => !open)} className={`flex items-center gap-x-1 hover:text-blue-300 ${pathname === '/settings' ? 'text-blue-300' : 'text-white'}`}>
-                <FiSettings />
-                <p>Settings</p>
+              <Link href='/profile' onClick={() => setIsDrawerOpen((open) => !open)} className={`flex items-center gap-x-2 hover:text-blue-300 ${pathname === '/profile' ? 'text-blue-300' : 'text-white'}`}>
+                {
+                  user?.profilePic ? <div className='size-6 object-cover overflow-hidden rounded-full border p-[1px]'>
+                    <Image className='rounded-full' src={user.profilePic} alt={user.fullname} width={1000} height={1000} />
+                  </div> : <BiUser />
+                }
+                <p>{user?.fullname}</p>
               </Link>
             </li>
             <li>
-              <Link href='/profile' onClick={() => setIsDrawerOpen((open) => !open)} className={`flex items-center gap-x-1 hover:text-blue-300 ${pathname === '/profile' ? 'text-blue-300' : 'text-white'}`}>
-                <BiUser />
-                <p>Profile</p>
+              <Link href='/settings' onClick={() => setIsDrawerOpen((open) => !open)} className={`flex items-center gap-x-1 hover:text-blue-300 ${pathname === '/settings' ? 'text-blue-300' : 'text-white'}`}>
+                <FiSettings />
+                <p>Settings</p>
               </Link>
             </li>
             <li>
