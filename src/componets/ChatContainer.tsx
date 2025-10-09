@@ -1,16 +1,36 @@
-import { setSelectedUser } from '@/redux/slices/messages/messageSlice';
-import { AppDispatch, RootState } from '@/redux/store'
+import { getMessages } from '@/redux/actions/messages/messagesActions';
+import { setMessages, setSelectedUser } from '@/redux/slices/messages/messageSlice';
+import { AppDispatch, RootState } from '@/redux/store';
+import { Message } from '@/types/messages';
 import Image from 'next/image';
-import React from 'react'
-import { HiPhoto } from 'react-icons/hi2';
-import { ImCross } from 'react-icons/im'
+import React, { useEffect } from 'react';
+import { ImCross } from 'react-icons/im';
 import { IoSendSharp } from 'react-icons/io5';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export default function ChatContainer() {
-    const { selectedUser } = useSelector((state: RootState) => state.message);
+    const { selectedUser, messages, messagesLoading } = useSelector((state: RootState) => state.message);
+    const receiverId = selectedUser?._id;
     const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        const fetchMessages = async () => {
+            if (receiverId) {
+                const res = await dispatch(getMessages(receiverId));
+                if (getMessages.fulfilled.match(res)) {
+                    dispatch(setMessages(res.payload as Message[]));
+                } else {
+                    const errorMessage = res.payload as string || "Login failed!";
+                    toast.error(errorMessage);
+                }
+            }
+        }
+
+        fetchMessages();
+    }, [receiverId, messages])
+
     return (
         <div className="w-[80%] h-full p-4 relative">
             <div className='flex items-center justify-between'>
@@ -32,9 +52,11 @@ export default function ChatContainer() {
                 <div className="chat chat-start">
                     <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
-                            <img
+                            <Image
                                 alt="Tailwind CSS chat bubble component"
                                 src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
+                                width={1000}
+                                height={1000}
                             />
                         </div>
                     </div>
@@ -48,9 +70,11 @@ export default function ChatContainer() {
                 <div className="chat chat-end">
                     <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
-                            <img
+                            <Image
                                 alt="Tailwind CSS chat bubble component"
                                 src="https://img.daisyui.com/images/profile/demo/anakeen@192.webp"
+                                width={1000}
+                                height={1000}
                             />
                         </div>
                     </div>
