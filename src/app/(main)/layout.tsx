@@ -33,7 +33,7 @@ export default function RootLayout({
         <ReduxProvider>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <main className="flex-1 overflow-hidden">
+            <main className="flex-1 overflow-hidden mt-[62px]">
               {children}
             </main>
           </div>

@@ -9,6 +9,7 @@ import { IoSendSharp } from 'react-icons/io5';
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import MessageInput from './MessageInput';
 
 export default function ChatContainer() {
     const { selectedUser, messages, messagesLoading } = useSelector((state: RootState) => state.message);
@@ -29,7 +30,7 @@ export default function ChatContainer() {
         }
 
         fetchMessages();
-    }, [receiverId, messages])
+    }, [receiverId, messages]);
 
     return (
         <div className="w-[80%] h-full p-4 relative">
@@ -61,7 +62,6 @@ export default function ChatContainer() {
                         </div>
                     </div>
                     <div className="chat-header">
-                        Obi-Wan Kenobi
                         <time className="text-xs opacity-50">12:45</time>
                     </div>
                     <div className="chat-bubble">You were the Chosen One!</div>
@@ -79,22 +79,13 @@ export default function ChatContainer() {
                         </div>
                     </div>
                     <div className="chat-header">
-                        Anakin
                         <time className="text-xs opacity-50">12:46</time>
                     </div>
                     <div className="chat-bubble">I hate you!</div>
                     <div className="chat-footer opacity-50">Seen at 12:46</div>
                 </div>
             </div>
-            <div className='absolute bottom-0 left-0 w-full p-4 flex items-center gap-x-6'>
-                <input className='w-[90%] outline-white focus:outline-1 py-3 px-6 rounded-full bg-slate-700' type="text" placeholder='Type a message...' />
-                <button className='cursor-pointer'>
-                    <MdOutlineAddPhotoAlternate size={24} />
-                </button>
-                <button className='cursor-pointer'>
-                    <IoSendSharp size={20} />
-                </button>
-            </div>
+            <MessageInput />
         </div>
     )
 }

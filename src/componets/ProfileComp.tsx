@@ -17,10 +17,10 @@ export default function ProfileComp() {
     const dispatch = useDispatch<AppDispatch>();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const handleAvatarUpload = (e: any) => {
+    const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
 
-        const file = e.target.files[0];
+        const file = e.target.files && e.target.files[0];
         if (!file) return;
 
         const reader = new FileReader();

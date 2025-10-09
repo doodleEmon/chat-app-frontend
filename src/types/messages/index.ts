@@ -1,7 +1,13 @@
 import { AuthResponse } from "@/types/auth/index";
 
-export interface Message {
+export interface MessageResponse {
     senderId: string,
+    receiverId: string,
+    text?: string,
+    image?: string
+}
+
+export interface Message {
     receiverId: string,
     text?: string,
     image?: string
