@@ -36,7 +36,7 @@ export default function ChatContainer() {
             <hr className='text-gray-600 my-2' />
             <div>
                 {
-                    messages.map((message) => (
+                    messages && messages.map((message) => (
                         <div key={message._id} className={`chat ${message.receiverId === receiver?._id ? 'chat-start' : 'chat-end'}`}>
                             <div className="chat-image avatar">
                                 <div className="size-8 rounded-full">

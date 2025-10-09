@@ -82,11 +82,11 @@ export default function Login() {
         <div className='min-h-screen flex items-center justify-center'>
             <div>
                 <div className='flex flex-col items-center justify-center gap-2'>
-                    <div className='p-2 bg-primary size-12 flex items-center justify-center rounded-full'>
-                        <BiMessage size={24} />
+                    <div className='p-2 bg-indigo-500 size-12 flex items-center justify-center rounded-full'>
+                        <BiMessage size={24} className='text-white' />
                     </div>
-                    <h3 className='text-2xl font-semibold'>Welcome Back!</h3>
-                    <p className='text-gray-400 text-sm'>Login to your account and chat with others.</p>
+                    <h3 className='text-2xl font-semibold text-white'>Welcome Back!</h3>
+                    <p className='text-gray-300 text-sm'>Login to your account and chat with others.</p>
                 </div>
                 <form onSubmit={handleSubmit} className="fieldset rounded-box w-sm p-4 mt-4 space-y-3">
                     <div>

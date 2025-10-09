@@ -8,7 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useState } from 'react'
-import { BiCross, BiLogOut, BiMessage, BiUser } from 'react-icons/bi'
+import { BiLogOut, BiMessage, BiUser } from 'react-icons/bi'
 import { FiSettings } from 'react-icons/fi'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { ImCross } from 'react-icons/im'
@@ -66,7 +66,7 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <button onClick={handleLogout} className='flex items-center gap-x-1 cursor-pointer hover:text-blue-300' type='button'>
+              <button onClick={handleLogout} className='flex items-center gap-x-1 cursor-pointer text-white hover:text-blue-300' type='button'>
                 <BiLogOut />
                 <p>Logout</p>
               </button>
@@ -109,7 +109,7 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <button onClick={handleLogout} className='flex items-center gap-x-1 cursor-pointer hover:text-blue-300' type='button'>
+              <button onClick={handleLogout} className='flex items-center gap-x-1 cursor-pointer text-white hover:text-blue-300' type='button'>
                 <BiLogOut />
                 <p>Logout</p>
               </button>

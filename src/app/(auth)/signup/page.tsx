@@ -96,20 +96,20 @@ export default function Signup() {
         <div className='min-h-screen flex items-center justify-center'>
             <div>
                 <div className='flex flex-col items-center justify-center gap-2'>
-                    <div className='p-2 bg-primary size-12 flex items-center justify-center rounded-full'>
-                        <BiMessage size={24} />
+                    <div className='p-2 bg-indigo-500 size-12 flex items-center justify-center rounded-full'>
+                        <BiMessage size={24} className='text-white' />
                     </div>
-                    <h3 className='text-2xl font-semibold'>Create Account</h3>
-                    <p className='text-gray-400 text-sm'>Let's chat. Get started with your free account!</p>
+                    <h3 className='text-2xl font-semibold text-white'>Create Account</h3>
+                    <p className='text-gray-300 text-sm'>Let's chat. Get started with your free account!</p>
                 </div>
                 <form onSubmit={handleSubmit} className="fieldset rounded-box w-sm p-4 mt-4 space-y-3">
                     <div>
-                        <label className="label text-sm mb-1">Full Name</label>
+                        <label className="label text-sm mb-1 text-gray-300">Full Name</label>
                         <div className='relative'>
                             <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
                             <input
                                 type="fullname"
-                                className="input focus:outline-none w-full pl-8"
+                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-500 text-white"
                                 placeholder="John Doe"
                                 value={formData.fullname}
                                 onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
@@ -118,12 +118,12 @@ export default function Signup() {
                         <p className={`text-sm text-red-500 mt-2 ${errorMessageFullname ? 'block' : 'hidden'}`}>{errorMessageFullname && errorMessageFullname}</p>
                     </div>
                     <div>
-                        <label className="label text-sm mb-1">Email</label>
+                        <label className="label text-sm mb-1 text-gray-300">Email</label>
                         <div className='relative'>
                             <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
                             <input
                                 type="text"
-                                className="input focus:outline-none w-full pl-8"
+                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-500 text-white"
                                 placeholder="john@gmail.com"
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -132,23 +132,23 @@ export default function Signup() {
                         <p className={`text-sm text-red-500 mt-2 ${errorMessageEmail ? 'block' : 'hidden'}`}>{errorMessageEmail && errorMessageEmail}</p>
                     </div>
                     <div>
-                        <label className="label text-sm mb-1">Password</label>
+                        <label className="label text-sm mb-1 text-gray-300">Password</label>
                         <div className='relative'>
                             <MdLockOutline size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
                             <input
                                 type={showPassword ? "text" : "password"}
-                                className="input focus:outline-none w-full pl-8"
+                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-500 text-white"
                                 placeholder="********"
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                             />
                             {
-                                showPassword ? <FaEye size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} right-3 top-1/2 -translate-y-1/2 z-40 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Hide password' /> : <FaEyeSlash size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} right-3 top-1/2 -translate-y-1/2 z-40 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Show password' />
+                                showPassword ? <FaEye size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} text-white right-3 top-1/2 -translate-y-1/2 z-40 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Hide password' /> : <FaEyeSlash size={16} className={`${formData.password === '' ? 'hidden' : 'absolute'} text-white right-3 top-1/2 -translate-y-1/2 z-40 cursor-pointer`} onClick={() => setShowPassword((s) => !s)} title='Show password' />
                             }
                         </div>
                         <p className={`text-sm text-red-500 mt-2 ${errorMessagePassword ? 'block' : 'hidden'}`}>{errorMessagePassword && errorMessagePassword}</p>
                     </div>
-                    <button type='submit' className="btn btn-primary mt-4 rounded">{loading === 'pending' ? <span className='flex items-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Creating account...</span> : <span>Create Account</span>}</button>
+                    <button type='submit' className="bg-indigo-600 mt-4 rounded text-base text-white cursor-pointer p-3">{loading === 'pending' ? <span className='flex items-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Creating account...</span> : <span>Create Account</span>}</button>
                 </form>
                 <div className='flex items-center justify-center mt-2'>
                     <p className='text-sm text-slate-300'>Already have an account? <Link href="/login" className='text-blue-400 hover:underline cursor-pointer'>Login</Link></p>
