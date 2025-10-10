@@ -92,10 +92,10 @@ export default function Login() {
                     <div>
                         <label className="label text-sm mb-1">Email</label>
                         <div className='relative'>
-                            <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
+                            <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 z-40" />
                             <input
                                 type="text"
-                                className="input focus:outline-none w-full pl-8"
+                                className="input focus:outline-none w-full pl-8 border-gray-500 bg-[#1D232A] focus:border-white text-white"
                                 placeholder="john@gmail.com"
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -106,10 +106,10 @@ export default function Login() {
                     <div>
                         <label className="label text-sm mb-1">Password</label>
                         <div className='relative'>
-                            <MdLockOutline size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
+                            <MdLockOutline size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 z-40" />
                             <input
                                 type={showPassword ? "text" : "password"}
-                                className="input focus:outline-none w-full pl-8"
+                                className="input focus:outline-none w-full pl-8 border-gray-500 bg-[#1D232A] focus:border-white text-white"
                                 placeholder="********"
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -120,7 +120,7 @@ export default function Login() {
                         </div>
                         <p className={`text-sm text-red-500 mt-2 ${errorMessagePassword ? 'block' : 'hidden'}`}>{errorMessagePassword && errorMessagePassword}</p>
                     </div>
-                    <button type='submit' className="btn btn-primary mt-4 rounded">{loading === 'pending' ? <span className='flex items-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Logging in...</span> : <span>Login</span>}</button>
+                    <button type='submit' className="p-3 mt-4 bg-indigo-600 rounded text-base cursor-pointer text-center">{loading === 'pending' ? <span className='flex items-center justify-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Logging in...</span> : <span>Login</span>}</button>
                 </form>
                 <div className='flex items-center justify-center mt-2'>
                     <p className='text-sm text-slate-300'>Don't have any account? <Link href="/signup" className='text-blue-400 hover:underline cursor-pointer'>Create account</Link></p>

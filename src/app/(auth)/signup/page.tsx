@@ -106,10 +106,10 @@ export default function Signup() {
                     <div>
                         <label className="label text-sm mb-1 text-gray-300">Full Name</label>
                         <div className='relative'>
-                            <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
+                            <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 z-40" />
                             <input
                                 type="fullname"
-                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-500 text-white"
+                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-400 text-white"
                                 placeholder="John Doe"
                                 value={formData.fullname}
                                 onChange={(e) => setFormData({ ...formData, fullname: e.target.value })}
@@ -120,10 +120,10 @@ export default function Signup() {
                     <div>
                         <label className="label text-sm mb-1 text-gray-300">Email</label>
                         <div className='relative'>
-                            <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
+                            <MdOutlineEmail size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 z-40" />
                             <input
                                 type="text"
-                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-500 text-white"
+                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-400 text-white"
                                 placeholder="john@gmail.com"
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -134,10 +134,10 @@ export default function Signup() {
                     <div>
                         <label className="label text-sm mb-1 text-gray-300">Password</label>
                         <div className='relative'>
-                            <MdLockOutline size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 z-40" />
+                            <MdLockOutline size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 z-40" />
                             <input
                                 type={showPassword ? "text" : "password"}
-                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-500 text-white"
+                                className="input w-full border-gray-500 focus:outline-none focus:border-white pl-8 bg-transparent placeholder:text-gray-400 text-white"
                                 placeholder="********"
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}

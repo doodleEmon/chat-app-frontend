@@ -31,10 +31,10 @@ export default function ChatContainer() {
     }, [receiver?._id, dispatch]);
 
     return (
-        <div className="w-[80%] h-full p-4 relative">
+        <div className="w-[80%] h-full p-4 relative flex flex-col">
             <ChatHeader />
             <hr className='text-gray-600 my-2' />
-            <div>
+            <div className='flex-1 overflow-y-auto overflow-hidden'>
                 {
                     messages && messages.map((message) => (
                         <div key={message._id} className={`chat ${message.receiverId === receiver?._id ? 'chat-start' : 'chat-end'}`}>
@@ -61,30 +61,6 @@ export default function ChatContainer() {
                         </div>
                     ))
                 }
-
-                {/* <div>
-                    {
-                        messages.map((message, index) => (
-                            <div key={index} className={`chat chat-end`}>
-                                <div className="chat-image avatar">
-                                    <div className="w-10 rounded-full">
-                                        <Image
-                                            src={sender?.profilePic || '/avatar.png'}
-                                            alt={sender?.fullname || 'Sender profile picture.'}
-                                            width={1000}
-                                            height={1000}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="chat-header">
-                                    <time className="text-xs opacity-50">12:46</time>
-                                </div>
-                                <div className="chat-bubble">{message.text}</div>
-                                <div className="chat-footer opacity-50">Seen at 12:46</div>
-                            </div>
-                        ))
-                    }
-                </div> */}
             </div>
             <MessageInput />
         </div>

@@ -43,7 +43,7 @@ export default function Header() {
       <div className='flex justify-between items-center container mx-auto py-4 px-4 lg:px-0'>
         <Link href='/' className='flex items-center gap-x-2'>
           <div className='p-2 rounded bg-blue-500 flex items-center justify-center'>
-            <BiMessage size={20} />
+            <BiMessage size={20} className='text-white' />
           </div>
           <p className='text-xl font-semibold text-blue-300'>Chattyfy</p>
         </Link>
@@ -82,7 +82,7 @@ export default function Header() {
           <div className='flex items-center justify-between'>
             <Link href='/' className='flex items-center gap-x-2'>
               <div className='p-2 rounded bg-blue-500 flex items-center justify-center'>
-                <BiMessage size={20} />
+                <BiMessage size={20} className='text-white' />
               </div>
               <p className='text-xl font-semibold text-blue-300'>Chattyfy</p>
             </Link>

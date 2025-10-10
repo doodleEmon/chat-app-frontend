@@ -32,8 +32,8 @@ export default function Sidebar() {
     return (
         <div className="w-[25%] pt-5 pb-12 pl-5 pr-0.5 bg-[#1D232A] border-r border-gray-700">
             <div className='w-full pr-2 relative'>
-                <input className='bg-slate-600 py-3 pl-10 pr-3 w-full outline-white focus:outline-1 rounded-lg' type="text" name="" id="" placeholder='Search with name or email' />
-                <BiSearch size={18} className='absolute left-3 top-1/2 -translate-y-1/2 text-slate-400' />
+                <input className='bg-[#45556C] py-3 pl-10 pr-3 w-full outline-white focus:outline-1 rounded-lg' type="text" name="" id="" placeholder='Search with name or email' />
+                <BiSearch size={18} className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400' />
             </div>
 
             <div className="h-full overflow-hidden overflow-y-scroll mt-4 mb-24 space-y-2 scrollbar-thin">

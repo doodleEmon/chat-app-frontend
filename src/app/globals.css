@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+body {
+    color: white;
+    background-color: #1D232A;
+}
+
 .scrollbar-thin {
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
