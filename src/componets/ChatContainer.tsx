@@ -31,10 +31,10 @@ export default function ChatContainer() {
     }, [receiver?._id, dispatch]);
 
     return (
-        <div className="w-[80%] h-full p-4 relative flex flex-col">
+        <div className="w-[80%] h-[calc(100%-4rem)] p-4 relative flex flex-col">
             <ChatHeader />
             <hr className='text-gray-600 my-2' />
-            <div className='flex-1 overflow-y-auto overflow-hidden'>
+            <div className='flex-1 h-full overflow-y-auto overflow-hidden scrollbar-thin px-4'>
                 {
                     messages && messages.map((message) => (
                         <div key={message._id} className={`chat ${message.receiverId === receiver?._id ? 'chat-start' : 'chat-end'}`}>
@@ -48,13 +48,11 @@ export default function ChatContainer() {
                                     />
                                 </div>
                             </div>
-                            <div>
-
-                            </div>
+                            <div></div>
                             <div className="chat-header">
                                 <time className="text-xs opacity-50">12:45</time>
                             </div>
-                            <div className="chat-bubble bg-slate-600 px-2 pt-1 text-sm">
+                            <div className="chat-bubble bg-slate-600 px-2 pt-1 text-sm text-white">
                                 {message.text}
                             </div>
                             <div className="chat-footer opacity-50">Delivered</div>

@@ -72,7 +72,7 @@ export default function MessageInput() {
     }
 
     return (
-        <div className='w-full h-full'>
+        <div className='w-full'>
             {imagePreview && (
                 <div className="mb-3 flex items-center gap-2">
                     <div className="relative">
@@ -96,7 +96,7 @@ export default function MessageInput() {
             )}
             <form onSubmit={handleSubmitMessage} className='w-full p-4 flex items-center gap-x-6'>
                 <input
-                    className='flex-1 outline-white focus:outline-1 py-3 px-6 rounded-lg bg-slate-700'
+                    className='flex-1 py-3 px-6 border border-gray-500 focus:outline-none focus:border-white rounded-lg '
                     type="text"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
