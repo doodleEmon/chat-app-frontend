@@ -36,7 +36,7 @@ export default function Sidebar() {
                 <BiSearch size={18} className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400' />
             </div>
 
-            <div className="h-full overflow-hidden overflow-y-scroll mt-4 mb-24 space-y-2 scrollbar-thin">
+            <div className="h-full overflow-hidden overflow-y-scroll mt-4 mb-24 space-y-2 scrollbar-thin pr-2">
                 {
                     usersLoading === "idle" || usersLoading === "pending" ? (
                         Array.from({ length: 12 }).map((_, index) => (

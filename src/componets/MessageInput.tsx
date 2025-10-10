@@ -74,7 +74,7 @@ export default function MessageInput() {
     return (
         <div className='w-full'>
             {imagePreview && (
-                <div className="mb-3 flex items-center gap-2">
+                <div className="mb-3 px-4 flex items-center gap-2">
                     <div className="relative">
                         <Image
                             src={imagePreview}
