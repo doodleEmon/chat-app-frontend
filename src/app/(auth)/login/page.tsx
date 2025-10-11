@@ -1,9 +1,8 @@
 "use client"
 
 import { login } from '@/redux/actions/auth/authActions'
-import { setUser } from '@/redux/slices/auth/authSlice'
 import { AppDispatch, RootState } from '@/redux/store'
-import { AuthResponse, LoginDataType } from '@/types/auth'
+import { LoginDataType } from '@/types/auth'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -69,7 +68,6 @@ export default function Login() {
         const res = await dispatch(login(formData));
 
         if (login.fulfilled.match(res)) {
-            dispatch(setUser(res.payload as AuthResponse));
             router.push("/");
             toast.success("Login successful!");
         } else {

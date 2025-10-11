@@ -5,7 +5,6 @@ import { Provider, useDispatch } from 'react-redux'
 import { AppDispatch, store } from '@/redux/store'
 import { checkAuth } from '@/redux/actions/auth/authActions';
 import { setUser } from '@/redux/slices/auth/authSlice';
-import { AuthResponse } from '@/types/auth';
 
 export default function ReduxProvider({ children }: { children: React.ReactNode }) {
 
@@ -15,8 +14,7 @@ export default function ReduxProvider({ children }: { children: React.ReactNode 
         useEffect(() => {
             const loadUser = async () => {
                 try {
-                    const res = await dispatch(checkAuth());
-                    dispatch(setUser(res.payload as AuthResponse));
+                    await dispatch(checkAuth());
                 } catch {
                     dispatch(setUser(null));
                 }

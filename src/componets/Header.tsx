@@ -1,9 +1,7 @@
 'use client'
 
 import { logout } from '@/redux/actions/auth/authActions'
-import { setUser } from '@/redux/slices/auth/authSlice'
 import { AppDispatch, RootState } from '@/redux/store'
-import { AuthResponse } from '@/types/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -28,7 +26,6 @@ export default function Header() {
     const res = await dispatch(logout());
 
     if (logout.fulfilled.match(res)) {
-      dispatch(setUser(res.payload as AuthResponse));
       router.push("/login");
       toast.success("Logged out successfully!");
       setIsDrawerOpen(!isDrawerOpen);

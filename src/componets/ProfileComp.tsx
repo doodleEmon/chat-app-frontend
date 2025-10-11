@@ -1,9 +1,7 @@
 'use client'
 
 import { updateProfile } from '@/redux/actions/auth/authActions'
-import { setUser } from '@/redux/slices/auth/authSlice'
 import { AppDispatch, RootState } from '@/redux/store'
-import { AuthResponse } from '@/types/auth'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { BiCamera, BiUser } from 'react-icons/bi'
@@ -32,7 +30,6 @@ export default function ProfileComp() {
             const res = await dispatch(updateProfile(base64Image));
 
             if (updateProfile.fulfilled.match(res)) {
-                dispatch(setUser(res.payload as AuthResponse));
                 toast.success("Image uploaded successfully!");
             } else {
                 const errorMessage = res.payload as string || "Image upload failed!";

@@ -1,6 +1,6 @@
 import { getMessages, getUsers, sendMessages } from "@/redux/actions/messages/messagesActions";
 import { AuthResponse } from "@/types/auth";
-import { Message, MessageState, MessageResponse } from "@/types/messages";
+import { MessageState, MessageResponse } from "@/types/messages";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: MessageState = {
@@ -57,8 +57,9 @@ export const messageSlice = createSlice({
 
             // send messages
             .addCase(sendMessages.fulfilled, (state, action) => {
+                console.log('action.payload.sendMessages', action.payload);
                 state.messagesLoading = 'succeeded';
-                state.messages = action.payload as MessageResponse[];
+                state.messages = [...state.messages, action.payload] as MessageResponse[];
             })
             .addCase(sendMessages.rejected, (state, action) => {
                 state.messagesLoading = 'failed';

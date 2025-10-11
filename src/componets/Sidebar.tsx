@@ -1,9 +1,8 @@
 'use client'
 
 import { getUsers } from '@/redux/actions/messages/messagesActions';
-import { setSelectedUser, setUsers } from '@/redux/slices/messages/messageSlice';
+import { setSelectedUser } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { AuthResponse } from '@/types/auth';
 import Image from 'next/image';
 import React, { useEffect } from 'react'
 import { BiSearch } from 'react-icons/bi';
@@ -19,9 +18,7 @@ export default function Sidebar() {
         const fetchUsers = async () => {
             const res = await dispatch(getUsers());
 
-            if (getUsers.fulfilled.match(res)) {
-                dispatch(setUsers(res.payload as AuthResponse[]));
-            } else {
+            if (getUsers.rejected.match(res)) {
                 const errorMessage = res.payload as string || "Loading user failed!";
                 toast.error(errorMessage);
             }

@@ -1,9 +1,8 @@
 'use client'
 
 import { signUp } from '@/redux/actions/auth/authActions';
-import { setUser } from '@/redux/slices/auth/authSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { AuthResponse, SignupDataType } from '@/types/auth';
+import { SignupDataType } from '@/types/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -83,7 +82,6 @@ export default function Signup() {
         const res = await dispatch(signUp(formData));
 
         if (signUp.fulfilled.match(res)) {
-            dispatch(setUser(res.payload as AuthResponse));
             toast.success("Account created successfully!");
             router.push("/");
         } else {
