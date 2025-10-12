@@ -61,9 +61,23 @@ export default function ChatContainer() {
                                             className="text-xs opacity-50"
                                         />
                                     </div>
-                                    <div className="chat-bubble bg-slate-600 px-2 pt-1 text-sm text-white">
-                                        {message.text && message.text}
-                                    </div>
+                                    {message.image && (
+                                        <div className="chat-bubble max-w-[240px] rounded-2xl overflow-hidden shadow-md mb-1">
+                                            <Image
+                                                src={message.image}
+                                                alt="Message image"
+                                                width={400}
+                                                height={400}
+                                                className="w-full h-auto object-cover cursor-pointer hover:opacity-90 transition"
+                                            />
+                                        </div>
+                                    )}
+                                    {message.text && (
+                                        <div className="chat-bubble bg-slate-600 text-white px-3 py-2 text-sm">
+                                            {message.text}
+                                        </div>
+                                    )}
+
                                     <div className="chat-footer opacity-50">{message.senderId === user?._id ? 'Sent' : ''}</div>
                                 </div>
                             )) : (
