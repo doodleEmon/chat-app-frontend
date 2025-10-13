@@ -1,18 +1,21 @@
 import { getMessages } from '@/redux/actions/messages/messagesActions';
 import { AppDispatch, RootState } from '@/redux/store';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import MessageInput from '@/componets/MessageInput';
 import ChatHeader from '@/componets/ChatHeader';
 import Loader from '@/componets/Loader';
 import FormattedDateTime from '@/componets/FormattedDateTime';
+import { ImCross } from 'react-icons/im';
 
 export default function ChatContainer() {
     const { selectedUser, messages, messagesLoading, messagesError } = useSelector((state: RootState) => state.message);
     const { user } = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch<AppDispatch>();
+    const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
+    const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
 
     useEffect(() => {
         if (selectedUser?._id) {
@@ -23,6 +26,11 @@ export default function ChatContainer() {
                 });
         }
     }, [selectedUser?._id, dispatch]);
+
+    const handleCloseModal = () => {
+        setIsImageClicked((pre) => !pre);
+        setSelectedImageUrl("");
+    }
 
     return (
         <div className="w-[80%] h-[calc(100vh-4rem)] p-4 relative flex flex-col">
@@ -42,7 +50,7 @@ export default function ChatContainer() {
                             return (
                                 <div
                                     key={message._id}
-                                    className={`flex items-end gap-2 ${isSender ? 'justify-end' : 'justify-start'}`}
+                                    className={`flex items-end gap-2 scrollbar-thin ${isSender ? 'justify-end' : 'justify-start'}`}
                                 >
                                     {/* Avatar (receiver) */}
                                     {!isSender && (
@@ -58,7 +66,10 @@ export default function ChatContainer() {
                                     <div className={`flex flex-col ${isSender ? 'items-end justify-center' : 'items-start'}`}>
                                         {/* Message Image */}
                                         {message.image && (
-                                            <div className="relative max-w-[240px] rounded-xl overflow-hidden shadow-md mb-1">
+                                            <div onClick={() => {
+                                                setSelectedImageUrl(message.image as string);
+                                                setIsImageClicked((pre) => !pre);
+                                            }} className="relative max-w-[240px] rounded-xl overflow-hidden shadow-md mb-1">
                                                 <Image
                                                     src={message.image}
                                                     alt="Message image"
@@ -126,6 +137,34 @@ export default function ChatContainer() {
                     </div>
                 )}
             </div>
+
+            {/* Modal */}
+            {isImageClicked && (
+                <dialog className="modal modal-open z-50">
+                    <div className="modal-box size-auto p-0 overflow-hidden">
+                        <div className="relative">
+                            <div className='size-full object-cover'>
+                                <Image
+                                    src={selectedImageUrl}
+                                    alt="Message image"
+                                    width={1000}
+                                    height={1000}
+                                    className="w-full h-auto object-cover"
+                                />
+                            </div>
+                            <button
+                                className="absolute right-2 top-2 bg-gray-400 size-6 rounded-full flex items-center justify-center cursor-pointer"
+                                onClick={handleCloseModal}
+                            >
+                                <ImCross size={10} />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="modal-backdrop" onClick={handleCloseModal}>
+                        <button>close</button>
+                    </div>
+                </dialog>
+            )}
 
             {/* Message Input */}
             <div className="mt-4">

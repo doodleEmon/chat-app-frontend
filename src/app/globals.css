@@ -4,12 +4,18 @@
 body {
     color: white;
     background-color: #1D232A;
+    margin: 0;
+    padding: 0;
+}
+
+.modal-open {
+  margin-right: -10px;
+  padding-right: 0;
 }
 
 
-
 .scrollbar-thin {
-    scrollbar-width: none;
+    scrollbar-width: thin;
     scrollbar-color: transparent transparent;
 }
 
@@ -18,8 +24,8 @@ body {
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-    width: 1px;
-    height: 1px;
+    width: 2px;
+    height: 2px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
@@ -27,6 +33,7 @@ body {
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
+    width: 1px;
     background: transparent;
 }
 

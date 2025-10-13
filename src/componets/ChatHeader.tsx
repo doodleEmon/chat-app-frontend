@@ -6,7 +6,7 @@ import { ImCross } from 'react-icons/im'
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ChatHeader() {
-    const { selectedUser: receiver, messagesLoading } = useSelector((state:RootState) => state.message);
+    const { selectedUser: receiver } = useSelector((state:RootState) => state.message);
     const dispatch = useDispatch<AppDispatch>();
     return (
         <div className='flex items-center justify-between'>
