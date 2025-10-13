@@ -25,7 +25,7 @@ export default function FormattedDateTime({ date, dateOrTime, className = "" }: 
             };
 
             const optionsForTime: Intl.DateTimeFormatOptions = {
-                hour: '2-digit',
+                hour: 'numeric',
                 minute: '2-digit',
                 hour12: true
             }

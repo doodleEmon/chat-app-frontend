@@ -44,7 +44,7 @@ export default function ChatContainer() {
                                     key={message._id}
                                     className={`flex items-end gap-2 ${isSender ? 'justify-end' : 'justify-start'}`}
                                 >
-                                    {/* Avatar (for receiver) */}
+                                    {/* Avatar (receiver) */}
                                     {!isSender && (
                                         <Image
                                             src={selectedUser?.profilePic || '/avatar.png'}
@@ -55,17 +55,10 @@ export default function ChatContainer() {
                                         />
                                     )}
 
-                                    <div className={`flex flex-col ${isSender ? 'items-end' : 'items-start'}`}>
-                                        {/* Timestamp */}
-                                        <FormattedDateTime
-                                            date={message?.createdAt}
-                                            dateOrTime="time"
-                                            className="text-xs text-gray-400 mb-1"
-                                        />
-
+                                    <div className={`flex flex-col ${isSender ? 'items-end justify-center' : 'items-start'}`}>
                                         {/* Message Image */}
                                         {message.image && (
-                                            <div className="max-w-[240px] rounded-2xl overflow-hidden shadow-md mb-1">
+                                            <div className="relative max-w-[240px] rounded-xl overflow-hidden shadow-md mb-1">
                                                 <Image
                                                     src={message.image}
                                                     alt="Message image"
@@ -73,26 +66,35 @@ export default function ChatContainer() {
                                                     height={400}
                                                     className="w-full h-auto object-cover cursor-pointer hover:opacity-90 transition"
                                                 />
+                                                <FormattedDateTime
+                                                    date={message?.createdAt}
+                                                    dateOrTime="time"
+                                                    className="text-[11px] text-gray-400 absolute right-2 bottom-0.5"
+                                                />
                                             </div>
                                         )}
 
                                         {/* Message Text */}
                                         {message.text && (
                                             <div
-                                                className={`px-3 py-2 text-sm rounded-2xl max-w-xs break-words ${
-                                                    isSender
-                                                        ? 'bg-indigo-600 text-white rounded-br-none'
-                                                        : 'bg-gray-200 text-gray-900 rounded-bl-none'
-                                                }`}
+                                                className={`relative pl-3 pr-[68px] py-1.5 rounded-lg text-sm max-w-lg break-words ${isSender
+                                                    ? 'bg-teal-900 text-white rounded-br-none'
+                                                    : 'bg-gray-700 text-white rounded-bl-none'
+                                                    }`}
                                             >
                                                 {message.text}
+                                                <FormattedDateTime
+                                                    date={message?.createdAt}
+                                                    dateOrTime="time"
+                                                    className="text-[11px] text-gray-400 absolute right-1.5 bottom-0.5"
+                                                />
                                             </div>
                                         )}
 
                                         {/* Message footer */}
-                                        {isSender && (
+                                        {/* {isSender && (
                                             <p className="text-[11px] text-gray-400 mt-1">Sent</p>
-                                        )}
+                                        )} */}
                                     </div>
 
                                     {/* Avatar (for sender) */}
