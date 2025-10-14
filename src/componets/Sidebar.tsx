@@ -32,7 +32,7 @@ export default function Sidebar() {
     }, [dispatch])
 
     useEffect(() => {
-        if (searchText !== "") {
+        if (searchText.trim() !== "") {
             const getData = setTimeout(async () => {
                 await dispatch(searchUsers(searchText.trim()))
                     .unwrap()
