@@ -7,7 +7,10 @@ export interface SignupDataType {
 export interface AuthState {
     user: AuthResponse | null;
     loading: 'idle' | 'pending' | 'succeeded' | 'failed';
+    searchedUsers: AuthResponse[] | [];
+    searchLoading: 'idle' | 'pending' | 'succeeded' | 'failed';
     error: string | null;
+    searchedError: string | null;
 }
 
 export interface AuthResponse {

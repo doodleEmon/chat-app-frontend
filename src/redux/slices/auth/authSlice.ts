@@ -1,11 +1,14 @@
-import { checkAuth, login, logout, signUp, updateProfile } from "@/redux/actions/auth/authActions";
+import { checkAuth, login, logout, searchUsers, signUp, updateProfile } from "@/redux/actions/auth/authActions";
 import { AuthResponse, AuthState } from "@/types/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: AuthState = {
     user: null,
     loading: 'idle',
+    searchedUsers: [],
+    searchLoading: 'idle',
     error: null,
+    searchedError: null
 };
 
 export const authSlice = createSlice({
@@ -75,6 +78,19 @@ export const authSlice = createSlice({
             .addCase(updateProfile.rejected, (state, action) => {
                 state.loading = 'failed';
                 state.error = action.payload as string;
+            })
+
+            // search users
+            .addCase(searchUsers.pending, (state) => {
+                state.searchLoading = 'pending';
+            })
+            .addCase(searchUsers.fulfilled, (state, action) => {
+                state.searchLoading = 'succeeded';
+                state.searchedUsers = action.payload as AuthResponse[];
+            })
+            .addCase(searchUsers.rejected, (state, action) => {
+                state.searchLoading = 'failed';
+                state.searchedError = action.payload as string;
             })
     }
 })

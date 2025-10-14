@@ -24,7 +24,7 @@ body {
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-    width: 2px;
+    width: 0px;
     height: 2px;
 }
 

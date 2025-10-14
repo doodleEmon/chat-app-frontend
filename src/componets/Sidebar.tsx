@@ -4,15 +4,20 @@ import { getUsers } from '@/redux/actions/messages/messagesActions';
 import { setSelectedUser } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import Image from 'next/image';
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BiSearch } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import SidebarSkeleton from './SidebarSkeleton';
+import { searchUsers } from '@/redux/actions/auth/authActions';
+import Loader from './Loader';
 
 export default function Sidebar() {
     const { users, usersLoading, selectedUser } = useSelector((state: RootState) => state.message);
     const dispatch = useDispatch<AppDispatch>();
+    const [searchText, setSearchText] = useState<string>("");
+    // const [searchedUsers, setSearchedUsers] = useState();
+    const { searchLoading, searchedUsers, searchedError } = useSelector((state: RootState) => state.auth)
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -26,24 +31,62 @@ export default function Sidebar() {
         fetchUsers();
     }, [dispatch])
 
+    useEffect(() => {
+        if (searchText !== "") {
+            const getData = setTimeout(async () => {
+                await dispatch(searchUsers(searchText.trim()))
+                    .unwrap()
+            }, 3000);
+            return () => clearTimeout(getData);
+        }
+    }, [searchText]);
+
     return (
-        <div className="w-[25%] pt-5 pb-12 pl-5 pr-0.5 bg-[#1D232A] border-r border-gray-700">
-            <div className='w-full pr-2 relative'>
-                <input className='py-3 pl-10 pr-3 w-full bg-[#1D232A] border border-gray-500 rounded-lg focus:outline-none focus:border-white text-white' type="text" placeholder='Search with name or email' />
+        <div className="w-[25%] pt-5 pb-12 pl-5 pr-4 bg-[#1D232A] border-r border-gray-700 relative">
+            <div className='w-full relative z-50'>
+                <input
+                    className='py-3 pl-10 pr-3 w-full bg-[#1D232A] border border-gray-500 rounded-lg focus:outline-none focus:border-white text-white'
+                    type="text"
+                    placeholder='Search with name or email'
+                    value={searchText}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
+                />
                 <BiSearch size={18} className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400' />
             </div>
 
-            <div className="h-full overflow-hidden overflow-y-scroll mt-4 mb-24 space-y-2 scrollbar-thin pr-2">
+            <div className={`absolute top-20 w-[89%] h-64 bg-gray-900 border mr-4 transition-opacity duration-300 z-50 rounded overflow-y-auto ${searchText ? 'opacity-100' : 'hidden'}`}>
+                {
+                    (searchLoading === 'idle' || searchLoading === 'pending') ? (
+                        <div className='size-full flex items-center justify-center'>
+                            <Loader />
+                        </div>
+                    ) : searchLoading === 'succeeded' ? (
+                        searchedUsers.length > 0 ? (
+                            <div className='size-full flex items-center justify-center'>
+                                <p>Show searched users</p>
+                            </div>
+                        ) : (
+                            <div className='size-full flex items-center justify-center'>
+                                <p>No user found</p>
+                            </div>
+                        )
+                    ) : (
+                        <p>Something went wrong!</p>
+                    )
+                }
+            </div>
+
+            <div className="h-full w-full overflow-y-scroll mt-4 mb-24 space-y-2 scrollbar-thin">
                 {
                     usersLoading === "idle" || usersLoading === "pending" ? (
                         Array.from({ length: 12 }).map((_, index) => (
                             <SidebarSkeleton key={index} />
                         ))
                     ) : users.length > 0 ? (
-                        users.map((user, index) => (
+                        users.map((user) => (
                             <div
                                 key={user._id}
-                                className={`flex items-center gap-x-4 py-2 px-3 cursor-pointer rounded-lg ${selectedUser?._id === user._id ? 'bg-slate-700' : ''}`}
+                                className={`w-full flex items-center gap-x-4 py-2 px-3 cursor-pointer rounded-lg ${selectedUser?._id === user._id ? 'bg-slate-700 w-full' : ''}`}
                                 onClick={() => dispatch(setSelectedUser(user))}
                             >
                                 <div className="size-9 object-cover border rounded-full">
