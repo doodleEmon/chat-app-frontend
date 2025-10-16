@@ -4,7 +4,7 @@ import { getUsers } from '@/redux/actions/messages/messagesActions';
 import { setSelectedUser } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import Image from 'next/image';
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { BiSearch } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -31,15 +31,29 @@ export default function Sidebar() {
         fetchUsers();
     }, [dispatch])
 
-    useEffect(() => {
-        if (searchText.trim() !== "") {
-            const getData = setTimeout(async () => {
-                await dispatch(searchUsers(searchText.trim()))
-                    .unwrap()
-            }, 3000);
-            return () => clearTimeout(getData);
+    // ✅ Memoize trimmed value (ignore spaces)
+    const trimmedSearchText = useMemo(() => searchText.trim(), [searchText]);
+
+    // ✅ Memoize search function
+    const handleSearch = useCallback(async (query: string) => {
+        if (!query) return;
+        try {
+            await dispatch(searchUsers(query)).unwrap();
+        } catch (error) {
+            console.error("Search failed:", error);
         }
-    }, [searchText]);
+    }, [dispatch]);
+
+    // ✅ Debounce logic (trigger only when user stops typing)
+    useEffect(() => {
+        if (!trimmedSearchText) return;
+
+        const timeout = setTimeout(() => {
+            handleSearch(trimmedSearchText);
+        }, 700); // 700ms after user stops typing
+
+        return () => clearTimeout(timeout);
+    }, [trimmedSearchText, handleSearch]);
 
     return (
         <div className="w-[25%] pt-5 pb-12 pl-5 pr-4 bg-[#1D232A] border-r border-gray-700 relative">
