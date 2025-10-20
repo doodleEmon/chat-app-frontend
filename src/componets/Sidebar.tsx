@@ -16,7 +16,6 @@ export default function Sidebar() {
     const { users, usersLoading, selectedUser } = useSelector((state: RootState) => state.message);
     const dispatch = useDispatch<AppDispatch>();
     const [searchText, setSearchText] = useState<string>("");
-    // const [searchedUsers, setSearchedUsers] = useState();
     const { searchLoading, searchedUsers, searchedError } = useSelector((state: RootState) => state.auth)
 
     useEffect(() => {
