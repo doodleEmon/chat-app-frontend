@@ -17,8 +17,17 @@ export const messageSlice = createSlice({
     name: 'messages',
     initialState,
     reducers: {
-        setUsers: (state, action: PayloadAction<AuthResponse[] | []>) => {
-            state.users = action.payload;
+        setUsers: (state, action: PayloadAction<AuthResponse | AuthResponse[]>) => {
+            const usersToAdd = Array.isArray(action.payload)
+                ? action.payload
+                : [action.payload];
+
+            state.users.unshift(...usersToAdd);
+        },
+        setRemoveUser: (state, action: PayloadAction<AuthResponse>) => {
+            state.users = state.users.filter(
+                user => user?._id !== action.payload?._id
+            );
         },
         setMessages: (state, action: PayloadAction<MessageResponse[] | []>) => {
             state.messages = action.payload as MessageResponse[];
@@ -35,7 +44,12 @@ export const messageSlice = createSlice({
             })
             .addCase(getUsers.fulfilled, (state, action) => {
                 state.usersLoading = 'succeeded';
-                state.users = action.payload as AuthResponse[];
+
+                const usersToAdd = Array.isArray(action.payload)
+                    ? action.payload
+                    : [action.payload];
+
+                state.users = [...usersToAdd];
             })
             .addCase(getUsers.rejected, (state, action) => {
                 state.usersLoading = 'failed';
@@ -68,5 +82,5 @@ export const messageSlice = createSlice({
     }
 })
 
-export const { setUsers, setMessages, setSelectedUser } = messageSlice.actions;
+export const { setUsers, setMessages, setSelectedUser, setRemoveUser } = messageSlice.actions;
 export default messageSlice.reducer; 

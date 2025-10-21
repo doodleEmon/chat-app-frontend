@@ -1,7 +1,7 @@
 'use client'
 
 import { getUsers } from '@/redux/actions/messages/messagesActions';
-import { setSelectedUser } from '@/redux/slices/messages/messageSlice';
+import { setSelectedUser, setUsers } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import SidebarSkeleton from '@/componets/SidebarSkeleton';
 import { searchUsers } from '@/redux/actions/auth/authActions';
 import Loader from '@/componets/Loader';
+import { AuthResponse } from '@/types/auth';
 
 export default function Sidebar() {
     const { users, usersLoading, selectedUser } = useSelector((state: RootState) => state.message);
@@ -71,8 +72,9 @@ export default function Sidebar() {
         setIsSearchFocused(false);
     };
 
-    const handleSelectSearchedUser = (user: any) => {
+    const handleSelectSearchedUser = (user: AuthResponse) => {
         dispatch(setSelectedUser(user));
+        dispatch(setUsers(user));
         setSearchText("");
         setIsSearchFocused(false);
     };
@@ -120,13 +122,13 @@ export default function Sidebar() {
                                             className='flex items-center gap-x-3 p-3 hover:bg-gray-800 cursor-pointer transition-colors border-b border-gray-800 last:border-b-0'
                                             onClick={() => handleSelectSearchedUser(user)}
                                         >
-                                            <div className="size-10 rounded-full overflow-hidden border border-gray-700 flex-shrink-0">
+                                            <div className="size-9 rounded-full overflow-hidden border border-gray-700 flex-shrink-0">
                                                 <Image
                                                     className="size-full object-cover"
                                                     src={user.profilePic || "/avatar.png"}
                                                     alt={user.fullname}
-                                                    height={40}
-                                                    width={40}
+                                                    height={36}
+                                                    width={36}
                                                 />
                                             </div>
                                             <div className="flex-1 min-w-0">

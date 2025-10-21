@@ -17,8 +17,8 @@ export interface MessageResponse {
 }
 
 export interface MessageState {
-    users: AuthResponse[] | [],
-    messages: MessageResponse[] | [],
+    users: AuthResponse[],
+    messages: MessageResponse[],
     usersLoading: 'idle' | 'pending' | 'succeeded' | 'failed',
     messagesLoading: 'idle' | 'pending' | 'succeeded' | 'failed',
     selectedUser: AuthResponse | null,
