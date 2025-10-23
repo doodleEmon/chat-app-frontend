@@ -88,7 +88,7 @@ export default function Sidebar() {
                 <input
                     className='py-3 pl-10 pr-10 w-full bg-[#1D232A] border border-gray-500 rounded-lg focus:outline-none focus:border-white text-white transition-colors'
                     type="text"
-                    placeholder='Search with name or email'
+                    placeholder='Search by name or email'
                     value={searchText}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
                     onFocus={() => setIsSearchFocused(true)}
@@ -145,14 +145,8 @@ export default function Sidebar() {
                                 </div>
                             )
                         ) : searchedError ? (
-                            <div className='h-32 flex flex-col items-center justify-center text-red-400'>
-                                <p className='text-sm'>Failed to search users</p>
-                                <button
-                                    onClick={() => handleSearch(trimmedSearchText)}
-                                    className='mt-2 text-xs underline hover:text-red-300'
-                                >
-                                    Try again
-                                </button>
+                            <div className='h-32 flex flex-col items-center justify-center text-white'>
+                                <p className='text-sm'>No users found</p>
                             </div>
                         ) : null}
                     </div>
