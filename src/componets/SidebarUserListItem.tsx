@@ -14,13 +14,13 @@ export default function SidebarUserListItem({ user, isSelected, onSelect } : { u
                 }`}
             onClick={() => onSelect(user)}
         >
-            <div className="size-9 rounded-full overflow-hidden border border-gray-700 flex-shrink-0">
+            <div className="size-11 md:size-10 lg:size-9 rounded-full overflow-hidden border border-gray-700 flex-shrink-0">
                 <Image
                     className="size-full object-cover"
                     src={user.profilePic || "/avatar.png"}
                     alt={user.fullname}
-                    height={36}
-                    width={36}
+                    height={1000}
+                    width={1000}
                 />
             </div>
             <div className="flex-1 min-w-0">

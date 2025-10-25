@@ -1,25 +1,30 @@
 'use client'
 
 import React from 'react'
-import Sidebar from '@/componets/Sidebar'
-import ChatContainer from '@/componets/ChatContainer'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import EmptyChatContainer from '@/componets/EmptyChatContainer'
+import Sidebar from './Sidebar';
+import EmptyChatContainer from './EmptyChatContainer';
+import ChatContainer from './ChatContainer';
 
 export default function HomeContainer() {
-    const { selectedUser } = useSelector((state: RootState) => state.message);
+  const { selectedUser } = useSelector((state: RootState) => state.message);
 
-    return (
-        <div className="flex h-[calc(100vh-4rem)] w-full">
-            <div className='h-full w-auto border-r border-gray-700'>
-                <Sidebar />
-            </div>
-            <div className='flex-1 flex items-center justify-center'>
-                {
-                    !selectedUser ? <EmptyChatContainer /> : <ChatContainer />
-                }
-            </div>
-        </div>
-    )
+  return (
+    <div className="flex h-[calc(100vh-4rem)] w-full">
+      {/* Sidebar */}
+      <div
+        className={`border-gray-700 md:border-r 
+          ${selectedUser ? 'hidden md:block md:w-80' : 'w-full md:w-80'}
+        `}
+      >
+        <Sidebar />
+      </div>
+
+      {/* Chat Container */}
+      <div className={`flex-1 ${!selectedUser ? 'hidden md:flex md:items-center md:justify-center' : 'flex md:items-center md:justify-center'}`}>
+        {!selectedUser ? <EmptyChatContainer /> : <ChatContainer />}
+      </div>
+    </div>
+  )
 }

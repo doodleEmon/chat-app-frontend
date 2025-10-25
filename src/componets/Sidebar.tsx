@@ -54,7 +54,7 @@ export default function Sidebar() {
         try {
             await dispatch(searchUsers(query)).unwrap();
         } catch (error) {
-            console.error("Search failed:", error);
+            console.log(error);
         }
     }, [dispatch]);
 
