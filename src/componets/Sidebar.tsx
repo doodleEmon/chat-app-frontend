@@ -88,7 +88,7 @@ export default function Sidebar() {
     }
 
     return (
-        <div className="w-full lg:w-[25%] pt-5 pb-12 pl-5 pr-4 bg-[#1D232A] border-r border-gray-700 relative">
+        <div className="pt-5 pb-12 pl-5 pr-4 bg-[#1D232A] border-r border-gray-700 relative">
             {/* Search Input */}
             <div className='w-full relative z-50' ref={searchRef}>
                 <input

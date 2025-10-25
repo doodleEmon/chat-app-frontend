@@ -36,7 +36,7 @@ export default function Header() {
   }
 
   return (
-    <nav className='shadow fixed top-0 w-full z-50 bg-[#1D232A]'>
+    <nav className='shadow-md fixed top-0 w-full z-50 bg-[#1D232A] h-16 flex items-center'>
       <div className='flex justify-between items-center container mx-auto py-4 px-4 lg:px-0'>
         <Link href='/' className='flex items-center gap-x-2'>
           <div className='p-2 rounded bg-blue-500 flex items-center justify-center'>

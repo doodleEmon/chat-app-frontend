@@ -35,7 +35,7 @@ export default function RootLayout({
           <SocketContextProvider>
             <div className="flex flex-col min-h-screen">
               <Header />
-              <main className="flex-1 overflow-hidden mt-[62px]">
+              <main className="flex-1 overflow-hidden mt-16">
                 {children}
               </main>
             </div>
