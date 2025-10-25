@@ -23,7 +23,7 @@ export default function ChatHeader() {
     }
 
     return (
-        <div className='flex items-center justify-between mt-4'>
+        <div className='flex items-center justify-between'>
             <div className='flex items-center gap-x-4'>
                 {/* 🔥 UPDATED: Added relative positioning for online indicator */}
                 <div className='relative size-10 object-cover rounded-full overflow-hidden'>

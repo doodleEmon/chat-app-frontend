@@ -88,9 +88,9 @@ export default function Sidebar() {
     }
 
     return (
-        <div className="pt-5 pb-12 pl-5 pr-4 bg-[#1D232A] border-r border-gray-700 relative">
+        <div className="pt-5 pb-12 pl-5 pr-4 bg-[#1D232A] relative">
             {/* Search Input */}
-            <div className='w-full relative z-50' ref={searchRef}>
+            <div className='w-full relative' ref={searchRef}>
                 <input
                     className='py-3 pl-10 pr-10 w-full bg-[#1D232A] border border-gray-500 rounded-lg focus:outline-none focus:border-white text-white transition-colors'
                     type="text"

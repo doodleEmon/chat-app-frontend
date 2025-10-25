@@ -47,12 +47,12 @@ export default function ChatContainer() {
     }
 
     return (
-        <div className="p-4 relative flex flex-col">
+        <div className="p-4 flex flex-col h-full w-full">
             <ChatHeader />
             <hr className="text-gray-600 my-2" />
 
             {/* Message List */}
-            <div className="flex-1 overflow-y-auto px-4 space-y-4 scrollbar-thin pt-2">
+            <div className="flex-1 overflow-y-scroll px-4 space-y-4 scrollbar-thin pt-2">
                 {messagesLoading === 'pending' || messagesLoading === 'idle' ? (
                     <div className="h-full flex justify-center items-center">
                         <Loader />
@@ -180,7 +180,7 @@ export default function ChatContainer() {
             )}
 
             {/* Message Input */}
-            <div className="pt-2">
+            <div className="pt-2 w-full h-16">
                 <MessageInput />
             </div>
         </div>
