@@ -33,12 +33,12 @@ export const SocketContextProvider = ({ children }: SocketContextProviderProps) 
     const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
 
     const { user } = useSelector((state: RootState) => state.auth);
-    console.log("🚀 ~ SocketContextProvider ~ user:", user)
+    // console.log("🚀 ~ SocketContextProvider ~ user:", user)
 
     useEffect(() => {
         if (user?._id) {
             // Initialize socket connection with userId in query
-            const socketInstance = io(baseUrl, {
+            const socketInstance = io(`http://localhost:5001`, {
                 query: {
                     userId: user._id
                 },

@@ -16,6 +16,7 @@ export default function ChatHeader() {
     
     // 🔥 NEW: Check if selected user is online
     const isOnline = selectedUser?._id ? onlineUsers.includes(selectedUser._id) : false;
+    console.log("🚀 ~ ChatHeader ~ isOnline:", isOnline)
 
     const handleCloseMessage = () => {
         if (messages.length === 0) {
@@ -38,13 +39,6 @@ export default function ChatHeader() {
                         height={1000} 
                         width={1000} 
                     />
-                    {/* 🔥 NEW: Online indicator dot */}
-                    {isOnline && (
-                        <span 
-                            className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"
-                            title="Online"
-                        />
-                    )}
                 </div>
                 <div className='flex flex-col gap-0'>
                     <h3 className='text-base font-semibold'>{selectedUser?.fullname}</h3>

@@ -48,7 +48,7 @@ export default function ChatContainer() {
     }
 
     return (
-        <div className="w-[80%] h-[calc(100vh-4rem)] p-4 relative flex flex-col">
+        <div className="w-full lg:w-[80%] h-[calc(100vh-4rem)] p-4 relative flex flex-col">
             <ChatHeader />
             <hr className="text-gray-600 my-2" />
 
