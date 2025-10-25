@@ -1,4 +1,4 @@
-import { useSocketContext } from '@/lib/SocketContext';
+import { useIsOnline } from '@/hooks/useIsOnline';
 import { setRemoveUser, setSelectedUser } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { AuthResponse } from '@/types/auth';
@@ -10,13 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function ChatHeader() {
     const { selectedUser, messages } = useSelector((state: RootState) => state.message);
     const dispatch = useDispatch<AppDispatch>();
-    
-    // 🔥 NEW: Get online users from socket context
-    const { onlineUsers } = useSocketContext();
-    
-    // 🔥 NEW: Check if selected user is online
-    const isOnline = selectedUser?._id ? onlineUsers.includes(selectedUser._id) : false;
-    console.log("🚀 ~ ChatHeader ~ isOnline:", isOnline)
+
+    const isOnline = useIsOnline(selectedUser?._id);
 
     const handleCloseMessage = () => {
         if (messages.length === 0) {
@@ -32,12 +27,12 @@ export default function ChatHeader() {
             <div className='flex items-center gap-x-4'>
                 {/* 🔥 UPDATED: Added relative positioning for online indicator */}
                 <div className='relative size-10 object-cover rounded-full overflow-hidden'>
-                    <Image 
-                        className='rounded-full' 
-                        src={selectedUser?.profilePic || '/avatar.png'} 
-                        alt={selectedUser?.fullname || 'User'} 
-                        height={1000} 
-                        width={1000} 
+                    <Image
+                        className='rounded-full'
+                        src={selectedUser?.profilePic || '/avatar.png'}
+                        alt={selectedUser?.fullname || 'User'}
+                        height={1000}
+                        width={1000}
                     />
                 </div>
                 <div className='flex flex-col gap-0'>
