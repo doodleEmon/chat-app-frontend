@@ -13,6 +13,7 @@ import { searchUsers } from '@/redux/actions/auth/authActions';
 import Loader from '@/componets/Loader';
 import { AuthResponse } from '@/types/auth';
 import { useIsOnline } from '@/hooks/useIsOnline';
+import SidebarUserListItem from './SidebarUserListItem';
 
 export default function Sidebar() {
     const { users, usersLoading, selectedUser } = useSelector((state: RootState) => state.message);
@@ -81,6 +82,10 @@ export default function Sidebar() {
     };
 
     const showSearchDropdown = isSearchFocused && searchText.length > 0;
+
+    const handleSelectUser = (user: AuthResponse) => {
+        dispatch(setSelectedUser(user));
+    }
 
     return (
         <div className="w-full lg:w-[25%] pt-5 pb-12 pl-5 pr-4 bg-[#1D232A] border-r border-gray-700 relative">
@@ -161,31 +166,14 @@ export default function Sidebar() {
                         <SidebarSkeleton key={index} />
                     ))
                 ) : users.length > 0 ? (
-                    users.map((user) => {
-                        const isOnline = useIsOnline(user._id);
-                        return (
-                            <div
-                                key={user._id}
-                                className={`w-full flex items-center gap-x-4 py-2 px-3 cursor-pointer rounded-lg transition-colors hover:bg-slate-700/50 ${selectedUser?._id === user._id ? 'bg-slate-700' : ''
-                                    }`}
-                                onClick={() => dispatch(setSelectedUser(user))}
-                            >
-                                <div className="size-9 rounded-full overflow-hidden border border-gray-700 flex-shrink-0">
-                                    <Image
-                                        className="size-full object-cover"
-                                        src={user.profilePic || "/avatar.png"}
-                                        alt={user.fullname}
-                                        height={36}
-                                        width={36}
-                                    />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="font-semibold truncate">{user.fullname}</p>
-                                    <p className={`text-sm ${isOnline ? 'text-green-500' : 'text-gray-400'}`}>{isOnline ? 'Online' : 'Offline'}</p>
-                                </div>
-                            </div>
-                        )
-                    }
+                    users.map((user) => (
+                        <SidebarUserListItem
+                            key={user._id}
+                            user={user}
+                            isSelected={selectedUser?._id === user._id}
+                            onSelect={handleSelectUser}
+                        />
+                    )
                     )
                 ) : (
                     <p className="text-center text-gray-400 mt-4">No user found.</p>
