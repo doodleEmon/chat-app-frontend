@@ -34,6 +34,21 @@ export const messageSlice = createSlice({
         },
         setSelectedUser: (state, action: PayloadAction<AuthResponse | null>) => {
             state.selectedUser = action.payload;
+        },
+
+        // 🔥 NEW: Add incoming socket message in real-time
+        addSocketMessage: (state, action: PayloadAction<MessageResponse>) => {
+            // Check if message is for the currently selected user
+            const incomingMessage = action.payload;
+            const currentUserId = state.selectedUser?._id;
+
+            // Only add if the message is part of current conversation
+            if (
+                incomingMessage.senderId === currentUserId ||
+                incomingMessage.receiverId === currentUserId
+            ) {
+                state.messages.push(incomingMessage);
+            }
         }
     },
     extraReducers: (builder) => {
@@ -82,5 +97,5 @@ export const messageSlice = createSlice({
     }
 })
 
-export const { setUsers, setMessages, setSelectedUser, setRemoveUser } = messageSlice.actions;
+export const { setUsers, setMessages, setSelectedUser, setRemoveUser, addSocketMessage } = messageSlice.actions;
 export default messageSlice.reducer; 

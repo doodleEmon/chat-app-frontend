@@ -4,6 +4,7 @@ import "../globals.css";
 import ReduxProvider from "@/redux/ReduxProvider";
 import Header from "@/componets/Header";
 import { Slide, ToastContainer } from "react-toastify";
+import { SocketContextProvider } from "@/lib/SocketContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,25 +32,27 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1D232A]`}
       >
         <ReduxProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-1 overflow-hidden mt-[62px]">
-              {children}
-            </main>
-          </div>
-          <ToastContainer
-            position="top-right"
-            autoClose={4000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick={false}
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Slide}
-          />
+          <SocketContextProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-1 overflow-hidden mt-[62px]">
+                {children}
+              </main>
+            </div>
+            <ToastContainer
+              position="top-right"
+              autoClose={4000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              transition={Slide}
+            />
+          </SocketContextProvider>
         </ReduxProvider>
       </body>
     </html>
