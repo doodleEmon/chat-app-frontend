@@ -12,7 +12,7 @@ import { MdOutlineAddPhotoAlternate } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-export default function MessageInput() {
+export default function MessageInput({ previewImage, removeImage }: { previewImage: (url: string) => void, removeImage: () => void }) {
     const [text, setText] = useState<string | "">("");
     const [imagePreview, setImagePreview] = useState<string | "">("");
     const fileInputRef = useRef(null);
@@ -32,16 +32,17 @@ export default function MessageInput() {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
+                previewImage(reader.result as string);
                 setImagePreview(reader.result as string);
             };
             reader.readAsDataURL(file);
         }
     }
 
-    const removeImage = () => {
-        setImagePreview("");
-        if (fileInputRef.current) fileInputRef.current = null;
-    }
+    // const removeImage = () => {
+    //     setImagePreview("");
+    //     if (fileInputRef.current) fileInputRef.current = null;
+    // }
 
     const handleSubmitMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -62,6 +63,7 @@ export default function MessageInput() {
             // clear form
             setText("");
             setImagePreview("");
+            removeImage();
         } else {
             const errorMessage = res.payload as string || "Have some issue!";
             toast.error(errorMessage);
@@ -71,8 +73,8 @@ export default function MessageInput() {
 
     return (
         <div className='w-full'>
-            {imagePreview && (
-                <div className=" px-4 flex items-center gap-2">
+            {/* {imagePreview && (
+                <div className=" px-4 flex items-center gap-2 z-50">
                     <div className="relative">
                         <Image
                             src={imagePreview}
@@ -91,7 +93,7 @@ export default function MessageInput() {
                         </button>
                     </div>
                 </div>
-            )}
+            )} */}
             <form onSubmit={handleSubmitMessage} className='w-full px-4 pt-2 flex items-center gap-x-6'>
                 <input
                     className='flex-1 py-3 px-6 border border-gray-500 focus:outline-none focus:border-white rounded-lg '

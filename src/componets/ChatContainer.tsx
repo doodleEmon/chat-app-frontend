@@ -17,7 +17,8 @@ export default function ChatContainer() {
     const dispatch = useDispatch<AppDispatch>();
     const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
     const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
-    
+    const [imagePreview, setImagePreview] = useState<string>("");
+
     // 🔥 NEW: Reference for auto-scrolling
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -46,8 +47,12 @@ export default function ChatContainer() {
         setSelectedImageUrl("");
     }
 
+    const handleCloseImagePreview = () => {
+        setImagePreview("");
+    }
+
     return (
-        <div className="p-4 flex flex-col h-full w-full">
+        <div className="relative p-4 flex flex-col h-full w-full">
             <ChatHeader />
             <hr className="text-gray-600 my-2" />
 
@@ -149,7 +154,31 @@ export default function ChatContainer() {
                         <p className="text-red-500">{messagesError}</p>
                     </div>
                 )}
+
             </div>
+            {
+                imagePreview && <div className='absolute bottom-20 left-8 h-10 w-[80%] border z-40'>
+                    <div className=" px-4 flex items-center gap-2 z-50">
+                        <div className="relative">
+                            <Image
+                                src={imagePreview}
+                                alt="Preview"
+                                className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
+                                width={1000}
+                                height={1000}
+                            />
+                            <button
+                                onClick={handleCloseImagePreview}
+                                className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gray-600
+                              flex items-center justify-center cursor-pointer text-white"
+                                type="button"
+                            >
+                                <ImCross size={9} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
 
             {/* Modal */}
             {isImageClicked && (
@@ -181,7 +210,7 @@ export default function ChatContainer() {
 
             {/* Message Input */}
             <div className="pt-2 w-full h-16">
-                <MessageInput />
+                <MessageInput previewImage={setImagePreview} removeImage={handleCloseImagePreview} />
             </div>
         </div>
     );
