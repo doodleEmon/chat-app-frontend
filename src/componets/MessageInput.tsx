@@ -7,6 +7,7 @@ import { IoSendSharp } from 'react-icons/io5'
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import Loader from '@/componets/Loader';
 
 interface MessageInputProps {
     imagePreview: string,
@@ -17,11 +18,8 @@ interface MessageInputProps {
 
 export default function MessageInput({ imagePreview, setImagePreview, removeImage, fileInputRef }: MessageInputProps) {
     const [text, setText] = useState<string | "">("");
-    // const [imagePreview, setImagePreview] = useState<string | "">("");
     const dispatch = useDispatch<AppDispatch>();
-    const { selectedUser } = useSelector((state: RootState) => state.message);
-
-    console.log("🚀 ~ MessageInput ~ imagePreview:", imagePreview);
+    const { selectedUser, messagesSendingLoading } = useSelector((state: RootState) => state.message);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -36,7 +34,6 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                // setImagePreview(reader.result as string);
                 console.log('reader.result->  ', reader.result);
                 setImagePreview(reader.result as string);
             };
@@ -46,11 +43,6 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
             }
         }
     }
-
-    // const removeImage = () => {
-    //     setImagePreview("");
-    //     if (fileInputRef.current) fileInputRef.current = null;
-    // }
 
     const handleSubmitMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,9 +60,7 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
         const res = await dispatch(sendMessages(formData));
 
         if (sendMessages.fulfilled.match(res)) {
-            // clear form
             setText("");
-            // setImagePreview("");
             removeImage();
         } else {
             const errorMessage = res.payload as string || "Have some issue!";
@@ -81,7 +71,7 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
 
     return (
         <div className='w-full'>
-            <form onSubmit={handleSubmitMessage} className='w-full px-4 pt-2 flex items-center gap-x-6'>
+            <form onSubmit={handleSubmitMessage} className='w-full px-2 md:px-4 pt-2 flex items-center gap-x-4 md:gap-x-6'>
                 <input
                     className='flex-1 py-3 px-6 border border-gray-500 focus:outline-none focus:border-white rounded-lg '
                     type="text"
@@ -100,13 +90,19 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
                         onChange={handleImageChange}
                     />
                 </label>
-                <button
-                    type='submit'
-                    className='cursor-pointer disabled:text-gray-600 disabled:cursor-not-allowed'
-                    disabled={text.trim() === "" && imagePreview === ""}
-                >
-                    <IoSendSharp size={20} className={`${text.trim() === "" && imagePreview === null}`} />
-                </button>
+                {
+                    messagesSendingLoading === "pending" ? (
+                        <div className="loading loading-spinner loading-sm"></div>
+                    ) : (
+                        <button
+                            type='submit'
+                            className='cursor-pointer disabled:text-gray-600 disabled:cursor-not-allowed'
+                            disabled={text.trim() === "" && imagePreview === ""}
+                        >
+                            <IoSendSharp size={20} className={`${text.trim() === "" && imagePreview === null}`} />
+                        </button>
+                    )
+                }
             </form>
         </div>
     )

@@ -21,7 +21,9 @@ export interface MessageState {
     messages: MessageResponse[],
     usersLoading: 'idle' | 'pending' | 'succeeded' | 'failed',
     messagesLoading: 'idle' | 'pending' | 'succeeded' | 'failed',
+    messagesSendingLoading: 'idle' | 'pending' | 'succeeded' | 'failed',
     selectedUser: AuthResponse | null,
     usersError: string | null,
     messagesError: string | null,
+    messagesSendingError: string | null,
 }

@@ -8,9 +8,11 @@ const initialState: MessageState = {
     messages: [],
     usersLoading: 'idle',
     messagesLoading: 'idle',
+    messagesSendingLoading: 'idle',
     selectedUser: null,
     usersError: null,
     messagesError: null,
+    messagesSendingError: null,
 }
 
 export const messageSlice = createSlice({
@@ -85,14 +87,18 @@ export const messageSlice = createSlice({
             })
 
             // send messages
+            .addCase(sendMessages.pending, (state) => {
+                state.messagesSendingLoading = 'pending';
+                state.messagesSendingError = null;
+            })
             .addCase(sendMessages.fulfilled, (state, action) => {
                 console.log('action.payload.sendMessages', action.payload);
-                state.messagesLoading = 'succeeded';
+                state.messagesSendingLoading = 'succeeded';
                 state.messages = [...state.messages, action.payload] as MessageResponse[];
             })
             .addCase(sendMessages.rejected, (state, action) => {
-                state.messagesLoading = 'failed';
-                state.messagesError = action.payload as string;
+                state.messagesSendingLoading = 'failed';
+                state.messagesSendingError = action.payload as string;
             })
     }
 })
