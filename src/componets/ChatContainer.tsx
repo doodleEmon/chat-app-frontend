@@ -18,6 +18,10 @@ export default function ChatContainer() {
     const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
     const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
     const [imagePreview, setImagePreview] = useState<string>("");
+    console.log("🚀 ~ ChatContainer ~ imagePreview:", imagePreview);
+    // const [previewImage, setPreviewImage] = useState<string>("");
+    
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // 🔥 NEW: Reference for auto-scrolling
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -157,8 +161,8 @@ export default function ChatContainer() {
 
             </div>
             {
-                imagePreview && <div className='absolute bottom-20 left-8 h-10 w-[80%] border z-40'>
-                    <div className=" px-4 flex items-center gap-2 z-50">
+                imagePreview && <div className='absolute bottom-20 left-8 w-auto h-auto z-40'>
+                    <div className="flex items-center gap-2 z-50">
                         <div className="relative">
                             <Image
                                 src={imagePreview}
@@ -210,7 +214,7 @@ export default function ChatContainer() {
 
             {/* Message Input */}
             <div className="pt-2 w-full h-16">
-                <MessageInput previewImage={setImagePreview} removeImage={handleCloseImagePreview} />
+                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} />
             </div>
         </div>
     );

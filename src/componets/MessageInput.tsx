@@ -1,23 +1,27 @@
 'use client';
 
 import { sendMessages } from '@/redux/actions/messages/messagesActions';
-import { setMessages } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { MessageResponse } from '@/types/messages';
-import Image from 'next/image';
 import React, { useRef, useState } from 'react'
-import { ImCross } from 'react-icons/im';
 import { IoSendSharp } from 'react-icons/io5'
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-export default function MessageInput({ previewImage, removeImage }: { previewImage: (url: string) => void, removeImage: () => void }) {
+interface MessageInputProps {
+    imagePreview: string,
+    setImagePreview: (url: string) => void,
+    removeImage: () => void,
+    fileInputRef: React.RefObject<HTMLInputElement | null>;
+}
+
+export default function MessageInput({ imagePreview, setImagePreview, removeImage, fileInputRef }: MessageInputProps) {
     const [text, setText] = useState<string | "">("");
-    const [imagePreview, setImagePreview] = useState<string | "">("");
-    const fileInputRef = useRef(null);
+    // const [imagePreview, setImagePreview] = useState<string | "">("");
     const dispatch = useDispatch<AppDispatch>();
     const { selectedUser } = useSelector((state: RootState) => state.message);
+
+    console.log("🚀 ~ MessageInput ~ imagePreview:", imagePreview);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -32,10 +36,14 @@ export default function MessageInput({ previewImage, removeImage }: { previewIma
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                previewImage(reader.result as string);
+                // setImagePreview(reader.result as string);
+                console.log('reader.result->  ', reader.result);
                 setImagePreview(reader.result as string);
             };
             reader.readAsDataURL(file);
+            if (fileInputRef.current) {
+                fileInputRef.current.value = '';
+            }
         }
     }
 
@@ -62,7 +70,7 @@ export default function MessageInput({ previewImage, removeImage }: { previewIma
         if (sendMessages.fulfilled.match(res)) {
             // clear form
             setText("");
-            setImagePreview("");
+            // setImagePreview("");
             removeImage();
         } else {
             const errorMessage = res.payload as string || "Have some issue!";
@@ -73,27 +81,6 @@ export default function MessageInput({ previewImage, removeImage }: { previewIma
 
     return (
         <div className='w-full'>
-            {/* {imagePreview && (
-                <div className=" px-4 flex items-center gap-2 z-50">
-                    <div className="relative">
-                        <Image
-                            src={imagePreview}
-                            alt="Preview"
-                            className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
-                            width={1000}
-                            height={1000}
-                        />
-                        <button
-                            onClick={removeImage}
-                            className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gray-600
-              flex items-center justify-center cursor-pointer text-white"
-                            type="button"
-                        >
-                            <ImCross size={9} />
-                        </button>
-                    </div>
-                </div>
-            )} */}
             <form onSubmit={handleSubmitMessage} className='w-full px-4 pt-2 flex items-center gap-x-6'>
                 <input
                     className='flex-1 py-3 px-6 border border-gray-500 focus:outline-none focus:border-white rounded-lg '
@@ -105,6 +92,7 @@ export default function MessageInput({ previewImage, removeImage }: { previewIma
                 <label htmlFor='image_send' className='cursor-pointer' title='Click to choose image file'>
                     <MdOutlineAddPhotoAlternate size={22} />
                     <input
+                        ref={fileInputRef}
                         type="file"
                         id="image_send"
                         className='hidden'
