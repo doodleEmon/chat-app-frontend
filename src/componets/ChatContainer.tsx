@@ -10,6 +10,7 @@ import Loader from '@/componets/Loader';
 import FormattedDateTime from '@/componets/FormattedDateTime';
 import { ImCross } from 'react-icons/im';
 import { useListenMessages } from '@/hooks/useListenMessages';
+import EmojiPicker from 'emoji-picker-react';
 
 export default function ChatContainer() {
     const { selectedUser, messages, messagesLoading, messagesError } = useSelector((state: RootState) => state.message);
@@ -18,13 +19,11 @@ export default function ChatContainer() {
     const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
     const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
     const [imagePreview, setImagePreview] = useState<string>("");
-    console.log("🚀 ~ ChatContainer ~ imagePreview:", imagePreview);
-    // const [previewImage, setPreviewImage] = useState<string>("");
-    
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [clickedEmoji, setClickedEmoji] = useState<boolean>(false);
 
-    // 🔥 NEW: Reference for auto-scrolling
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const closeEmojiRef = useRef<HTMLInputElement>(null);
 
     // 🔥 NEW: Listen for socket messages in real-time
     useListenMessages();
@@ -55,8 +54,15 @@ export default function ChatContainer() {
         setImagePreview("");
     }
 
+    useEffect(() => {
+        if (closeEmojiRef.current) {
+            closeEmojiRef.current.value = '';
+            setClickedEmoji
+        }
+    }, [closeEmojiRef])
+
     return (
-        <div className="relative p-4 flex flex-col h-full w-full">
+        <div className="relative p-4 flex flex-col h-full w-full" ref={closeEmojiRef}>
             <ChatHeader />
             <hr className="text-gray-600 my-2" />
 
@@ -160,6 +166,11 @@ export default function ChatContainer() {
                 )}
 
             </div>
+
+            <div className='absolute bottom-20 right-8 lg:right-24 w-auto h-auto z-40'>
+                <EmojiPicker open={clickedEmoji} />
+            </div>
+
             {
                 imagePreview && <div className='absolute bottom-20 left-8 w-auto h-auto z-40'>
                     <div className="flex items-center gap-2 z-50">
@@ -214,7 +225,7 @@ export default function ChatContainer() {
 
             {/* Message Input */}
             <div className="pt-2 w-full h-16">
-                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} />
+                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} setClickedEmoji={setClickedEmoji} clickedEmoji={clickedEmoji} />
             </div>
         </div>
     );

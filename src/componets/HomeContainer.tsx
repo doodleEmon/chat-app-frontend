@@ -3,9 +3,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import Sidebar from './Sidebar';
-import EmptyChatContainer from './EmptyChatContainer';
-import ChatContainer from './ChatContainer';
+import Sidebar from '@/componets/Sidebar';
+import EmptyChatContainer from '@/componets/EmptyChatContainer';
+import ChatContainer from '@/componets/ChatContainer';
 
 export default function HomeContainer() {
   const { selectedUser } = useSelector((state: RootState) => state.message);

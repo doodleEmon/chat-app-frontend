@@ -4,19 +4,22 @@ import { sendMessages } from '@/redux/actions/messages/messagesActions';
 import { AppDispatch, RootState } from '@/redux/store';
 import React, { useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
-import { MdOutlineAddPhotoAlternate } from 'react-icons/md'
+import { MdOutlineAddPhotoAlternate, MdOutlineEmojiEmotions } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Loader from '@/componets/Loader';
+import EmojiPicker from 'emoji-picker-react';
 
 interface MessageInputProps {
-    imagePreview: string,
-    setImagePreview: (url: string) => void,
-    removeImage: () => void,
+    imagePreview: string;
+    setImagePreview: (url: string) => void;
+    removeImage: () => void;
     fileInputRef: React.RefObject<HTMLInputElement | null>;
+    setClickedEmoji: (state: boolean) => void;
+    clickedEmoji: boolean;
 }
 
-export default function MessageInput({ imagePreview, setImagePreview, removeImage, fileInputRef }: MessageInputProps) {
+export default function MessageInput({ imagePreview, setImagePreview, removeImage, fileInputRef, setClickedEmoji, clickedEmoji }: MessageInputProps) {
     const [text, setText] = useState<string | "">("");
     const dispatch = useDispatch<AppDispatch>();
     const { selectedUser, messagesSendingLoading } = useSelector((state: RootState) => state.message);
@@ -42,6 +45,10 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
                 fileInputRef.current.value = '';
             }
         }
+    }
+
+    const handleOpenEmoji = () => {
+        setClickedEmoji(!clickedEmoji);
     }
 
     const handleSubmitMessage = async (e: React.FormEvent) => {
@@ -79,6 +86,12 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
                     onChange={(e) => setText(e.target.value)}
                     placeholder='Type a message...'
                 />
+
+
+                <button onClick={handleOpenEmoji} className='cursor-pointer'>
+                    <MdOutlineEmojiEmotions size={20} />
+                </button>
+
                 <label htmlFor='image_send' className='cursor-pointer' title='Click to choose image file'>
                     <MdOutlineAddPhotoAlternate size={22} />
                     <input
