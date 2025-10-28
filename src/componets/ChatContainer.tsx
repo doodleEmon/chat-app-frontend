@@ -19,9 +19,9 @@ export default function ChatContainer() {
     const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
     const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
     const [imagePreview, setImagePreview] = useState<string>("");
-    const [isOpenEmoji, setIsOpenEmoji] = useState<boolean>(false);
+    const [isEmojiOpen, setIsEmojiOpen] = useState<boolean>(false);
     const [selectedEmoji, setSelectedEmoji] = useState<string[] | string>("");
-    console.log("🚀 ~ ChatContainer ~ selectedEmoji:", selectedEmoji)
+    console.log("🚀 ~ ChatContainer ~ selectedEmoji:", selectedEmoji);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -174,7 +174,7 @@ export default function ChatContainer() {
             </div>
 
             <div className='absolute bottom-20 right-8 lg:right-24 w-auto h-auto z-40'>
-                <EmojiPicker open={isOpenEmoji} theme={Theme.DARK} onEmojiClick={onEmojiClick} />
+                <EmojiPicker open={isEmojiOpen} theme={Theme.DARK} onEmojiClick={onEmojiClick} />
             </div>
 
             {
@@ -231,7 +231,7 @@ export default function ChatContainer() {
 
             {/* Message Input */}
             <div className="pt-2 w-full h-16">
-                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} setIsOpenEmoji={setIsOpenEmoji} isOpenEmoji={isOpenEmoji} />
+                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} setIsEmojiOpen={setIsEmojiOpen} isEmojiOpen={isEmojiOpen} selectedEmoji={selectedEmoji} />
             </div>
         </div>
     );

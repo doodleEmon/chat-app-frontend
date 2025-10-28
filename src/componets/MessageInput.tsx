@@ -15,11 +15,12 @@ interface MessageInputProps {
     setImagePreview: (url: string) => void;
     removeImage: () => void;
     fileInputRef: React.RefObject<HTMLInputElement | null>;
-    setIsOpenEmoji: (state: boolean) => void;
-    isOpenEmoji: boolean;
+    setIsEmojiOpen: (state: boolean) => void;
+    isEmojiOpen: boolean;
+    selectedEmoji: string[] | string;
 }
 
-export default function MessageInput({ imagePreview, setImagePreview, removeImage, fileInputRef, setIsOpenEmoji, isOpenEmoji }: MessageInputProps) {
+export default function MessageInput({ imagePreview, setImagePreview, removeImage, fileInputRef, setIsEmojiOpen, isEmojiOpen, selectedEmoji }: MessageInputProps) {
     const [text, setText] = useState<string | "">("");
     const dispatch = useDispatch<AppDispatch>();
     const { selectedUser, messagesSendingLoading } = useSelector((state: RootState) => state.message);
@@ -48,7 +49,7 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
     }
 
     const handleOpenEmoji = () => {
-        setIsOpenEmoji(!isOpenEmoji);
+        setIsEmojiOpen(!isEmojiOpen);
     }
 
     const handleSubmitMessage = async (e: React.FormEvent) => {
