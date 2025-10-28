@@ -20,7 +20,7 @@ export default function ChatContainer() {
     const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
     const [imagePreview, setImagePreview] = useState<string>("");
     const [isEmojiOpen, setIsEmojiOpen] = useState<boolean>(false);
-    const [selectedEmoji, setSelectedEmoji] = useState<string[] | string>("");
+    const [selectedEmoji, setSelectedEmoji] = useState<string>("");
     console.log("🚀 ~ ChatContainer ~ selectedEmoji:", selectedEmoji);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -57,15 +57,8 @@ export default function ChatContainer() {
     }
 
     const onEmojiClick = (emojiData: EmojiClickData) => {
-        setSelectedEmoji([...selectedEmoji, emojiData.emoji]);
+        setSelectedEmoji((pre) => pre + emojiData.emoji);
     }
-
-    useEffect(() => {
-        if (closeEmojiRef.current) {
-            closeEmojiRef.current.value = '';
-            // setClickedEmoji
-        }
-    }, [closeEmojiRef])
 
     return (
         <div className="relative p-4 flex flex-col h-full w-full" ref={closeEmojiRef}>
@@ -173,7 +166,7 @@ export default function ChatContainer() {
 
             </div>
 
-            <div className='absolute bottom-20 right-8 lg:right-24 w-auto h-auto z-40'>
+            <div className='absolute bottom-20 right-8 lg:right-24 w-auto h-auto z-40 emoji-container'>
                 <EmojiPicker open={isEmojiOpen} theme={Theme.DARK} onEmojiClick={onEmojiClick} />
             </div>
 
@@ -231,7 +224,7 @@ export default function ChatContainer() {
 
             {/* Message Input */}
             <div className="pt-2 w-full h-16">
-                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} setIsEmojiOpen={setIsEmojiOpen} isEmojiOpen={isEmojiOpen} selectedEmoji={selectedEmoji} />
+                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} setIsEmojiOpen={setIsEmojiOpen} isEmojiOpen={isEmojiOpen} selectedEmoji={selectedEmoji} setSelectedEmoji={setSelectedEmoji} />
             </div>
         </div>
     );

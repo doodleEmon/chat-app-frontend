@@ -2,7 +2,7 @@
 
 import { sendMessages } from '@/redux/actions/messages/messagesActions';
 import { AppDispatch, RootState } from '@/redux/store';
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 import { MdOutlineAddPhotoAlternate, MdOutlineEmojiEmotions } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,12 +18,14 @@ interface MessageInputProps {
     setIsEmojiOpen: (state: boolean) => void;
     isEmojiOpen: boolean;
     selectedEmoji: string[] | string;
+    setSelectedEmoji: (state: string) => void;
 }
 
-export default function MessageInput({ imagePreview, setImagePreview, removeImage, fileInputRef, setIsEmojiOpen, isEmojiOpen, selectedEmoji }: MessageInputProps) {
+export default function MessageInput({ imagePreview, setImagePreview, removeImage, fileInputRef, setIsEmojiOpen, isEmojiOpen, selectedEmoji, setSelectedEmoji }: MessageInputProps) {
     const [text, setText] = useState<string | "">("");
     const dispatch = useDispatch<AppDispatch>();
     const { selectedUser, messagesSendingLoading } = useSelector((state: RootState) => state.message);
+    const textInputRef = useRef<HTMLInputElement>(null);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -48,7 +50,9 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
         }
     }
 
-    const handleOpenEmoji = () => {
+    const handleOpenEmoji = (e: React.FormEvent) => {
+        e.preventDefault();
+
         setIsEmojiOpen(!isEmojiOpen);
     }
 
@@ -70,6 +74,8 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
         if (sendMessages.fulfilled.match(res)) {
             setText("");
             removeImage();
+            setIsEmojiOpen(false);
+            setSelectedEmoji("");
         } else {
             const errorMessage = res.payload as string || "Have some issue!";
             toast.error(errorMessage);
@@ -77,10 +83,22 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
 
     }
 
+    // Add emoji to text when selectedEmoji changes
+    useEffect(() => {
+        if (selectedEmoji) {
+            setText((prev) => prev + selectedEmoji);
+            setSelectedEmoji(""); // Reset after adding
+
+            // Focus back on input after emoji selection
+            textInputRef.current?.focus();
+        }
+    }, [selectedEmoji, setSelectedEmoji])
+
     return (
         <div className='w-full'>
             <form onSubmit={handleSubmitMessage} className='w-full px-2 md:px-4 pt-2 flex items-center gap-x-4 md:gap-x-6'>
                 <input
+                    ref={textInputRef}
                     className='flex-1 py-3 px-6 border border-gray-500 focus:outline-none focus:border-white rounded-lg '
                     type="text"
                     value={text}
@@ -88,11 +106,14 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
                     placeholder='Type a message...'
                 />
 
-
-                <button onClick={handleOpenEmoji} className='cursor-pointer'>
+                <button
+                    type="button"
+                    title="Click to add some emoji"
+                    onClick={handleOpenEmoji}
+                    className="cursor-pointer"
+                >
                     <MdOutlineEmojiEmotions size={20} />
                 </button>
-
                 <label htmlFor='image_send' className='cursor-pointer' title='Click to choose image file'>
                     <MdOutlineAddPhotoAlternate size={22} />
                     <input
