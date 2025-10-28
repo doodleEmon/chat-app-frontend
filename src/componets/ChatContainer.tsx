@@ -10,7 +10,7 @@ import Loader from '@/componets/Loader';
 import FormattedDateTime from '@/componets/FormattedDateTime';
 import { ImCross } from 'react-icons/im';
 import { useListenMessages } from '@/hooks/useListenMessages';
-import EmojiPicker from 'emoji-picker-react';
+import EmojiPicker, { EmojiClickData, Theme } from 'emoji-picker-react';
 
 export default function ChatContainer() {
     const { selectedUser, messages, messagesLoading, messagesError } = useSelector((state: RootState) => state.message);
@@ -19,7 +19,9 @@ export default function ChatContainer() {
     const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
     const [isImageClicked, setIsImageClicked] = useState<boolean>(false);
     const [imagePreview, setImagePreview] = useState<string>("");
-    const [clickedEmoji, setClickedEmoji] = useState<boolean>(false);
+    const [isOpenEmoji, setIsOpenEmoji] = useState<boolean>(false);
+    const [selectedEmoji, setSelectedEmoji] = useState<string[] | string>("");
+    console.log("🚀 ~ ChatContainer ~ selectedEmoji:", selectedEmoji)
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -54,10 +56,14 @@ export default function ChatContainer() {
         setImagePreview("");
     }
 
+    const onEmojiClick = (emojiData: EmojiClickData) => {
+        setSelectedEmoji([...selectedEmoji, emojiData.emoji]);
+    }
+
     useEffect(() => {
         if (closeEmojiRef.current) {
             closeEmojiRef.current.value = '';
-            setClickedEmoji
+            // setClickedEmoji
         }
     }, [closeEmojiRef])
 
@@ -168,7 +174,7 @@ export default function ChatContainer() {
             </div>
 
             <div className='absolute bottom-20 right-8 lg:right-24 w-auto h-auto z-40'>
-                <EmojiPicker open={clickedEmoji} />
+                <EmojiPicker open={isOpenEmoji} theme={Theme.DARK} onEmojiClick={onEmojiClick} />
             </div>
 
             {
@@ -225,7 +231,7 @@ export default function ChatContainer() {
 
             {/* Message Input */}
             <div className="pt-2 w-full h-16">
-                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} setClickedEmoji={setClickedEmoji} clickedEmoji={clickedEmoji} />
+                <MessageInput imagePreview={imagePreview} setImagePreview={setImagePreview} removeImage={handleCloseImagePreview} fileInputRef={fileInputRef} setIsOpenEmoji={setIsOpenEmoji} isOpenEmoji={isOpenEmoji} />
             </div>
         </div>
     );
