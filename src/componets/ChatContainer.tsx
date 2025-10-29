@@ -21,7 +21,6 @@ export default function ChatContainer() {
     const [imagePreview, setImagePreview] = useState<string>("");
     const [isEmojiOpen, setIsEmojiOpen] = useState<boolean>(false);
     const [selectedEmoji, setSelectedEmoji] = useState<string>("");
-    console.log("🚀 ~ ChatContainer ~ selectedEmoji:", selectedEmoji);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -196,30 +195,31 @@ export default function ChatContainer() {
 
             {/* Modal */}
             {isImageClicked && (
-                <dialog className="modal modal-open z-50">
-                    <div className="modal-box size-auto p-0 overflow-hidden">
-                        <div className="relative">
-                            <div className='size-full object-cover'>
-                                <Image
-                                    src={selectedImageUrl}
-                                    alt="Message image"
-                                    width={1000}
-                                    height={1000}
-                                    className="w-full h-auto object-cover"
-                                />
-                            </div>
-                            <button
-                                className="absolute right-2 top-2 bg-gray-400 size-6 rounded-full flex items-center justify-center cursor-pointer"
-                                onClick={handleCloseModal}
-                            >
-                                <ImCross size={10} />
-                            </button>
+                <div
+                    className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+                    onClick={handleCloseModal}
+                >
+                    <div
+                        className="relative max-w-lg max-h-[80vh] overflow-auto"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className='bg-gray-700 shadow-2xl rounded'>
+                            <Image
+                                src={selectedImageUrl}
+                                alt="Message image"
+                                width={1000}
+                                height={1000}
+                                className="w-auto h-auto object-contain rounded"
+                            />
                         </div>
+                        <button
+                            onClick={handleCloseModal}
+                            className="absolute top-2 right-2 bg-gray-600 text-white rounded-full p-1 cursor-pointer hover:bg-gray-700"
+                        >
+                            <ImCross size={12} />
+                        </button>
                     </div>
-                    <div className="modal-backdrop" onClick={handleCloseModal}>
-                        <button>close</button>
-                    </div>
-                </dialog>
+                </div>
             )}
 
             {/* Message Input */}
