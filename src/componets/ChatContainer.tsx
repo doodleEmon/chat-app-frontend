@@ -200,7 +200,7 @@ export default function ChatContainer() {
                     onClick={handleCloseModal}
                 >
                     <div
-                        className="relative max-w-lg max-h-[80vh] overflow-auto"
+                        className="relative max-w-lg max-h-[80vh] overflow-auto scrollbar-thin"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className='bg-gray-700 shadow-2xl rounded'>
