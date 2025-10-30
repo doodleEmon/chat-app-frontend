@@ -1,6 +1,7 @@
 'use client';
 
 import { sendMessages } from '@/redux/actions/messages/messagesActions';
+import { moveUserToTop } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import React, { SetStateAction, useEffect, useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
@@ -71,6 +72,7 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
         const res = await dispatch(sendMessages(formData));
 
         if (sendMessages.fulfilled.match(res)) {
+            dispatch(moveUserToTop(selectedUser._id));
             setText("");
             removeImage();
             setIsEmojiOpen(false);

@@ -38,7 +38,22 @@ export const messageSlice = createSlice({
             state.selectedUser = action.payload;
         },
 
-        // 🔥 NEW: Add incoming socket message in real-time
+        // 🔥 NEW: Move user to top of the list
+        moveUserToTop: (state, action: PayloadAction<string>) => {
+            const userId = action.payload;
+            const userIndex = state.users.findIndex(u => u._id === userId);
+
+            if (userIndex > 0) {
+                // Only move if user exists and is not already at top
+                const [user] = state.users.splice(userIndex, 1);
+                state.users.unshift(user);
+            } else if (userIndex === -1) {
+                // User not in list - will be added when messages are fetched
+                console.log(`User ${userId} not found in users list`);
+            }
+        },
+
+        // 🔥 Add incoming socket message in real-time
         addSocketMessage: (state, action: PayloadAction<MessageResponse>) => {
             // Check if message is for the currently selected user
             const incomingMessage = action.payload;
@@ -103,5 +118,5 @@ export const messageSlice = createSlice({
     }
 })
 
-export const { setUsers, setMessages, setSelectedUser, setRemoveUser, addSocketMessage } = messageSlice.actions;
+export const { setUsers, setMessages, setSelectedUser, setRemoveUser, addSocketMessage, moveUserToTop } = messageSlice.actions;
 export default messageSlice.reducer; 

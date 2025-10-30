@@ -1,7 +1,7 @@
 'use client'
 
 import { getUsers } from '@/redux/actions/messages/messagesActions';
-import { setSelectedUser, setUsers } from '@/redux/slices/messages/messageSlice';
+import { moveUserToTop, setSelectedUser, setUsers } from '@/redux/slices/messages/messageSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import Image from 'next/image';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -12,8 +12,9 @@ import SidebarSkeleton from '@/componets/SidebarSkeleton';
 import { searchUsers } from '@/redux/actions/auth/authActions';
 import Loader from '@/componets/Loader';
 import { AuthResponse } from '@/types/auth';
-import { useIsOnline } from '@/hooks/useIsOnline';
 import SidebarUserListItem from './SidebarUserListItem';
+import { Socket } from 'socket.io-client';
+import { useSocketContext } from '@/lib/SocketContext';
 
 export default function Sidebar() {
     const { users, usersLoading, selectedUser } = useSelector((state: RootState) => state.message);
@@ -22,6 +23,7 @@ export default function Sidebar() {
     const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
     const { searchLoading, searchedUsers, searchedError } = useSelector((state: RootState) => state.auth);
     const searchRef = useRef<HTMLDivElement>(null);
+    const { socket } = useSocketContext();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -86,6 +88,20 @@ export default function Sidebar() {
     const handleSelectUser = (user: AuthResponse) => {
         dispatch(setSelectedUser(user));
     }
+
+    useEffect(() => {
+        if (!socket) return;
+
+        const handleMoveUserToTop = (userId: string) => {
+            dispatch(moveUserToTop(userId));
+        };
+
+        socket.on("moveUserToTop", handleMoveUserToTop);
+
+        return () => {
+            socket.off("moveUserToTop", handleMoveUserToTop);
+        };
+    }, [socket, dispatch]);
 
     return (
         <div className="pt-5 pb-12 pl-5 pr-4 bg-[#1D232A] relative">
