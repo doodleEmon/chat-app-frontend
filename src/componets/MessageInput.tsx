@@ -2,20 +2,19 @@
 
 import { sendMessages } from '@/redux/actions/messages/messagesActions';
 import { AppDispatch, RootState } from '@/redux/store';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { SetStateAction, useEffect, useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 import { MdOutlineAddPhotoAlternate, MdOutlineEmojiEmotions } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import Loader from '@/componets/Loader';
-import EmojiPicker from 'emoji-picker-react';
 
 interface MessageInputProps {
     imagePreview: string;
     setImagePreview: (url: string) => void;
     removeImage: () => void;
     fileInputRef: React.RefObject<HTMLInputElement | null>;
-    setIsEmojiOpen: (state: boolean) => void;
+    // setIsEmojiOpen: (state: boolean) => void;
+    setIsEmojiOpen: React.Dispatch<SetStateAction<boolean>>;
     isEmojiOpen: boolean;
     selectedEmoji: string[] | string;
     setSelectedEmoji: (state: string) => void;
@@ -53,7 +52,7 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
     const handleOpenEmoji = (e: React.FormEvent) => {
         e.preventDefault();
 
-        setIsEmojiOpen(!isEmojiOpen);
+        setIsEmojiOpen(true);
     }
 
     const handleSubmitMessage = async (e: React.FormEvent) => {
@@ -110,7 +109,8 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
                     type="button"
                     title="Click to add some emoji"
                     onClick={handleOpenEmoji}
-                    className="cursor-pointer"
+                    className={`${isEmojiOpen ? 'text-gray-600 cursor-not-allowed' : 'cursor-pointer text-white'}`}
+                    disabled={isEmojiOpen === true}
                 >
                     <MdOutlineEmojiEmotions size={20} />
                 </button>

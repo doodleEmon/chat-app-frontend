@@ -59,6 +59,25 @@ export default function ChatContainer() {
         setSelectedEmoji((pre) => pre + emojiData.emoji);
     }
 
+    // Close emoji picker when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            // Check if click is outside emoji picker container
+            if (isEmojiOpen && !target.closest('.emoji-container')) {
+                setIsEmojiOpen(false);
+            }
+        };
+
+        if (isEmojiOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isEmojiOpen]);
+
     return (
         <div className="relative p-4 flex flex-col h-full w-full" ref={closeEmojiRef}>
             <ChatHeader />
