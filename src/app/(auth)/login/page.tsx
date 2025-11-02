@@ -121,7 +121,7 @@ export default function Login() {
                     <button type='submit' className="p-3 mt-4 bg-indigo-600 rounded text-base cursor-pointer text-center">{loading === 'pending' ? <span className='flex items-center justify-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Logging in...</span> : <span>Login</span>}</button>
                 </form>
                 <div className='flex items-center justify-center mt-2'>
-                    <p className='text-sm text-slate-300'>Don't have any account? <Link href="/signup" className='text-blue-400 hover:underline cursor-pointer'>Create account</Link></p>
+                    <p className='text-sm text-slate-300'>Don&apos;t have any account? <Link href="/signup" className='text-blue-400 hover:underline cursor-pointer'>Create account</Link></p>
                 </div>
             </div>
         </div>
