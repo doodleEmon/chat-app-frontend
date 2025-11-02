@@ -1,5 +1,6 @@
 import { apiCall } from "@/services/api";
 import { LoginDataType, SignupDataType } from "@/types/auth";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const signUp = createAsyncThunk(
@@ -8,8 +9,8 @@ export const signUp = createAsyncThunk(
         try {
             const data = await apiCall("/auth/signup", "POST", formData);
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Signup failed.');
         }
     },
 )
@@ -20,8 +21,8 @@ export const login = createAsyncThunk(
         try {
             const data = await apiCall("/auth/login", "POST", loginData)
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Login failed.');
         }
     }
 )
@@ -32,8 +33,8 @@ export const checkAuth = createAsyncThunk(
         try {
             const data = await apiCall("/auth/check", "GET")
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Check auth failed!');
         }
     }
 )
@@ -44,8 +45,8 @@ export const logout = createAsyncThunk(
         try {
             const data = await apiCall("/auth/logout", "POST")
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Logout failed!');
         }
     }
 )
@@ -56,8 +57,8 @@ export const updateProfile = createAsyncThunk(
         try {
             const data = await apiCall("/auth/update-profile", "PUT", { profilePic })
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Profile update failed!');
         }
     }
 )
@@ -68,8 +69,8 @@ export const searchUsers = createAsyncThunk(
         try {
             const data = await apiCall(`/auth/search?query=${encodeURIComponent(query)}`, "GET")
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Search user failed!');
         }
     }
 )
