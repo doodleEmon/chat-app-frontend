@@ -1,5 +1,6 @@
 import { apiCall } from "@/services/api";
 import { Message } from "@/types/messages";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const getUsers = createAsyncThunk(
@@ -8,8 +9,8 @@ export const getUsers = createAsyncThunk(
         try {
             const data = await apiCall("/messages/users", "GET");
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Ger users failed!');
         }
     },
 )
@@ -20,8 +21,8 @@ export const getMessages = createAsyncThunk(
         try {
             const data = await apiCall(`/messages/${id}`, "GET");
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Get messages failed!');
         }
     },
 )
@@ -32,8 +33,8 @@ export const sendMessages = createAsyncThunk(
         try {
             const data = await apiCall(`/messages/send/${receiverId}`, "POST", { text, image });
             return data;
-        } catch (error: any) {
-            return rejectWithValue(error.message);
+        } catch (error: unknown) {
+            return rejectWithValue(getErrorMessage(error) || 'Message send failed!');
         }
     },
 )
