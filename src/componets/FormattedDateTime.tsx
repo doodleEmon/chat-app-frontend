@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import React from "react";
 
 interface FormattedDateProps {
@@ -36,8 +37,8 @@ export default function FormattedDateTime({ date, dateOrTime, className = "" }: 
                 return dateObj.toLocaleString('en-US', optionsForDate);
             }
 
-        } catch (error) {
-            return 'Invalid date';
+        } catch (error: unknown) {
+            return getErrorMessage(error);
         }
     };
 

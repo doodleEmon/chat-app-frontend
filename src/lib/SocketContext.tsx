@@ -1,6 +1,5 @@
 "use client";
 
-import { baseUrl } from '@/constants';
 import { RootState } from '@/redux/store';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -33,7 +32,6 @@ export const SocketContextProvider = ({ children }: SocketContextProviderProps) 
     const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
 
     const { user } = useSelector((state: RootState) => state.auth);
-    // console.log("🚀 ~ SocketContextProvider ~ user:", user)
 
     useEffect(() => {
         if (user?._id) {

@@ -13,7 +13,6 @@ import { searchUsers } from '@/redux/actions/auth/authActions';
 import Loader from '@/componets/Loader';
 import { AuthResponse } from '@/types/auth';
 import SidebarUserListItem from './SidebarUserListItem';
-import { Socket } from 'socket.io-client';
 import { useSocketContext } from '@/lib/SocketContext';
 
 export default function Sidebar() {
@@ -138,7 +137,7 @@ export default function Sidebar() {
                         ) : searchLoading === 'succeeded' ? (
                             searchedUsers && searchedUsers.length > 0 ? (
                                 <div className='overflow-y-auto max-h-80 scrollbar-thin'>
-                                    {searchedUsers.map((user: any) => (
+                                    {searchedUsers.map((user) => (
                                         <div
                                             key={user._id}
                                             className='flex items-center gap-x-3 p-3 hover:bg-gray-800 cursor-pointer transition-colors border-b border-gray-800 last:border-b-0'
