@@ -18,7 +18,6 @@ export const useListenMessages = () => {
 
         // Listen for new messages from backend
         const handleNewMessage = (message: MessageResponse) => {
-            console.log('🔔 New message received via socket:', message);
 
             // Optional: Play notification sound
             // try {

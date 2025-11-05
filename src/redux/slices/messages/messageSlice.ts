@@ -107,7 +107,6 @@ export const messageSlice = createSlice({
                 state.messagesSendingError = null;
             })
             .addCase(sendMessages.fulfilled, (state, action) => {
-                console.log('action.payload.sendMessages', action.payload);
                 state.messagesSendingLoading = 'succeeded';
                 state.messages = [...state.messages, action.payload] as MessageResponse[];
             })

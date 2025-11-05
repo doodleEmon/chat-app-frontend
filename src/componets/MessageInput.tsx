@@ -40,7 +40,6 @@ export default function MessageInput({ imagePreview, setImagePreview, removeImag
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                console.log('reader.result->  ', reader.result);
                 setImagePreview(reader.result as string);
             };
             reader.readAsDataURL(file);
