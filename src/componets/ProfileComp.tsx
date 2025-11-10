@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 
 export default function ProfileComp() {
 
-    const { loading, user } = useSelector((state: RootState) => state.auth);
+    const { updateProfileLoading, user } = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch<AppDispatch>();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -58,7 +58,7 @@ export default function ProfileComp() {
                         </label>
                     </div>
                 </div>
-                <p className='text-sm text-slate-400 text-center mt-4'>{loading === 'pending' ? 'Uploading image...' : 'Click the camera icon to update your photo'}</p>
+                <p className='text-sm text-slate-400 text-center mt-4'>{updateProfileLoading === 'pending' ? 'Uploading image...' : 'Click the camera icon to update your photo'}</p>
                 <div className='mt-8 space-y-4'>
                     <div className='relative'>
                         <BiUser size={16} className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 z-40" />

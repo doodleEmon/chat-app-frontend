@@ -4,9 +4,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: AuthState = {
     user: null,
-    loading: 'idle',
     searchedUsers: [],
+    signupLoading: 'idle',
+    loginLoading: 'idle',
+    checkAuthLoading: 'idle',
     searchLoading: 'idle',
+    logoutLoading: 'idle',
+    updateProfileLoading: 'idle',
     error: null,
     searchedError: null
 };
@@ -23,60 +27,60 @@ export const authSlice = createSlice({
         builder
             // signup
             .addCase(signUp.pending, (state) => {
-                state.loading = 'pending';
+                state.signupLoading = 'pending';
             })
             .addCase(signUp.fulfilled, (state, action) => {
-                state.loading = 'succeeded';
+                state.signupLoading = 'succeeded';
                 state.user = action.payload as AuthResponse;
             })
             .addCase(signUp.rejected, (state, action) => {
-                state.loading = 'failed';
+                state.signupLoading = 'failed';
                 state.error = action.payload as string;
             })
 
             // login
             .addCase(login.pending, (state) => {
-                state.loading = 'pending';
+                state.loginLoading = 'pending';
             })
             .addCase(login.fulfilled, (state, action) => {
-                state.loading = 'succeeded';
+                state.loginLoading = 'succeeded';
                 state.user = action.payload as AuthResponse;
             })
             .addCase(login.rejected, (state, action) => {
-                state.loading = 'failed';
+                state.loginLoading = 'failed';
                 state.error = action.payload as string;
             })
 
             // check auth
             .addCase(checkAuth.fulfilled, (state, action) => {
-                state.loading = 'succeeded';
+                state.checkAuthLoading = 'succeeded';
                 state.user = action.payload as AuthResponse;
             })
             .addCase(checkAuth.rejected, (state, action) => {
-                state.loading = 'failed';
+                state.checkAuthLoading = 'failed';
                 state.error = action.payload as string;
             })
 
             // logout
             .addCase(logout.fulfilled, (state) => {
-                state.loading = 'succeeded';
+                state.logoutLoading = 'succeeded';
                 state.user = null;
             })
             .addCase(logout.rejected, (state, action) => {
-                state.loading = 'failed';
+                state.logoutLoading = 'failed';
                 state.error = action.payload as string;
             })
 
             // update profile
             .addCase(updateProfile.pending, (state) => {
-                state.loading = 'pending';
+                state.updateProfileLoading = 'pending';
             })
             .addCase(updateProfile.fulfilled, (state, action) => {
-                state.loading = 'succeeded';
+                state.updateProfileLoading = 'succeeded';
                 state.user = action.payload as AuthResponse;
             })
             .addCase(updateProfile.rejected, (state, action) => {
-                state.loading = 'failed';
+                state.updateProfileLoading = 'failed';
                 state.error = action.payload as string;
             })
 

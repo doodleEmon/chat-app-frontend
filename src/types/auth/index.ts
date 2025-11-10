@@ -6,8 +6,12 @@ export interface SignupDataType {
 
 export interface AuthState {
     user: AuthResponse | null;
-    loading: 'idle' | 'pending' | 'succeeded' | 'failed';
     searchedUsers: AuthResponse[];
+    signupLoading: 'idle' | 'pending' | 'succeeded' | 'failed';
+    loginLoading: 'idle' | 'pending' | 'succeeded' | 'failed';
+    checkAuthLoading: 'idle' | 'pending' | 'succeeded' | 'failed';
+    updateProfileLoading: 'idle' | 'pending' | 'succeeded' | 'failed';
+    logoutLoading: 'idle' | 'pending' | 'succeeded' | 'failed';
     searchLoading: 'idle' | 'pending' | 'succeeded' | 'failed';
     error: string | null;
     searchedError: string | null;

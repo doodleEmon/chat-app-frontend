@@ -23,7 +23,7 @@ export default function Login() {
     const [errorMessageEmail, setErrorMessageEmail] = useState('');
     const [errorMessagePassword, setErrorMessagePassword] = useState('');
     const dispatch = useDispatch<AppDispatch>();
-    const { loading } = useSelector((state: RootState) => state.auth);
+    const { loginLoading } = useSelector((state: RootState) => state.auth);
     const router = useRouter();
 
     const validateData = () => {
@@ -118,7 +118,7 @@ export default function Login() {
                         </div>
                         <p className={`text-sm text-red-500 mt-2 ${errorMessagePassword ? 'block' : 'hidden'}`}>{errorMessagePassword && errorMessagePassword}</p>
                     </div>
-                    <button type='submit' className="p-3 mt-4 bg-indigo-600 rounded text-base cursor-pointer text-center">{loading === 'pending' ? <span className='flex items-center justify-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Logging in...</span> : <span>Login</span>}</button>
+                    <button type='submit' className="p-3 mt-4 bg-indigo-600 rounded text-base cursor-pointer text-center">{loginLoading === 'pending' ? <span className='flex items-center justify-center gap-x-1'><CgSpinner size={16} className="animate-spin" /> Logging in...</span> : <span>Login</span>}</button>
                 </form>
                 <div className='flex items-center justify-center mt-2'>
                     <p className='text-sm text-slate-300'>Don&apos;t have any account? <Link href="/signup" className='text-blue-400 hover:underline cursor-pointer'>Create account</Link></p>
