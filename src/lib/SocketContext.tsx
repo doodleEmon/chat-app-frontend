@@ -36,7 +36,7 @@ export const SocketContextProvider = ({ children }: SocketContextProviderProps) 
     useEffect(() => {
         if (user?._id) {
             // Initialize socket connection with userId in query
-            const socketInstance = io(`http://localhost:5001`, {
+            const socketInstance = io(`https://chat-app-backend-2spp.onrender.com`, {
                 query: {
                     userId: user._id
                 },
