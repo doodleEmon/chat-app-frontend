@@ -68,8 +68,8 @@ export default function Login() {
         const res = await dispatch(login(formData));
 
         if (login.fulfilled.match(res)) {
-            router.push("/");
             toast.success("Login successful!");
+            router.push("/");
         } else {
             const errorMessage = res.payload as string || "Login failed!";
             toast.error(errorMessage);
