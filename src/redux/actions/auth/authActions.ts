@@ -9,9 +9,6 @@ export const signUp = createAsyncThunk(
         try {
             const data = await apiCall("/auth/signup", "POST", formData);
 
-            // ⚠️ Wait for cookie to be set in browser
-            await new Promise(resolve => setTimeout(resolve, 150));
-
             return data;
         } catch (error: unknown) {
             return rejectWithValue(getErrorMessage(error) || 'Signup failed.');
@@ -25,9 +22,6 @@ export const login = createAsyncThunk(
         try {
             const data = await apiCall("/auth/login", "POST", loginData);
 
-            // ⚠️ Wait for cookie to be set in browser
-            await new Promise(resolve => setTimeout(resolve, 150));
-
             return data;
         } catch (error: unknown) {
             return rejectWithValue(getErrorMessage(error) || 'Login failed.');
@@ -40,9 +34,6 @@ export const checkAuth = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const data = await apiCall("/auth/check", "GET");
-
-            // ⚠️ Wait for cookie to be set in browser
-            await new Promise(resolve => setTimeout(resolve, 150));
 
             return data;
         } catch (error: unknown) {
