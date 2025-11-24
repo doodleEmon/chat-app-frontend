@@ -39,7 +39,11 @@ export const checkAuth = createAsyncThunk(
     'auth/check',
     async (_, { rejectWithValue }) => {
         try {
-            const data = await apiCall("/auth/check", "GET")
+            const data = await apiCall("/auth/check", "GET");
+
+            // ⚠️ Wait for cookie to be set in browser
+            await new Promise(resolve => setTimeout(resolve, 150));
+
             return data;
         } catch (error: unknown) {
             return rejectWithValue(getErrorMessage(error) || 'Check auth failed!');
