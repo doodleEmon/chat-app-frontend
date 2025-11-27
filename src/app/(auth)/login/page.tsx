@@ -1,6 +1,6 @@
 "use client"
 
-import { login } from '@/redux/actions/auth/authActions'
+import { checkAuth, login } from '@/redux/actions/auth/authActions'
 import { AppDispatch, RootState } from '@/redux/store'
 import { LoginDataType } from '@/types/auth'
 import Link from 'next/link'
@@ -66,6 +66,8 @@ export default function Login() {
         }
 
         const res = await dispatch(login(formData));
+        router.refresh();
+        await dispatch(checkAuth());
 
         if (login.fulfilled.match(res)) {
             toast.success("Login successful!");

@@ -1,6 +1,6 @@
 'use client'
 
-import { signUp } from '@/redux/actions/auth/authActions';
+import { checkAuth, signUp } from '@/redux/actions/auth/authActions';
 import { AppDispatch, RootState } from '@/redux/store';
 import { SignupDataType } from '@/types/auth';
 import Link from 'next/link';
@@ -80,6 +80,8 @@ export default function Signup() {
         }
 
         const res = await dispatch(signUp(formData));
+        router.refresh();
+        await dispatch(checkAuth());
 
         if (signUp.fulfilled.match(res)) {
             toast.success("Account created successfully!");

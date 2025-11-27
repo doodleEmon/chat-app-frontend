@@ -4,6 +4,9 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
     const token = req.cookies.get("jwt")?.value;
 
+    console.log("🚀 ~ middleware ~ token:", token)
+
+
     const { pathname } = req.nextUrl;
 
     // Public routes
@@ -18,6 +21,8 @@ export function middleware(req: NextRequest) {
             // If logged in, redirect to dashboard
             return NextResponse.redirect(new URL("/", req.url));
         }
+
+        console.log("I am the error!");
         // If not logged in, allow access
         return NextResponse.next();
     }
@@ -27,7 +32,10 @@ export function middleware(req: NextRequest) {
         pathname.startsWith(route)
     );
 
+    console.log("🚀 ~ middleware ~ isProtected:", isProtected)
+
     if (!token && isProtected) {
+
         // If not logged in, redirect to login
         return NextResponse.redirect(new URL("/login", req.url));
     }

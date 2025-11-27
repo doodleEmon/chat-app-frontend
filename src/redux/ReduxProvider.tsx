@@ -14,13 +14,14 @@ export default function ReduxProvider({ children }: { children: React.ReactNode 
         useEffect(() => {
             const loadUser = async () => {
                 try {
-                    await dispatch(checkAuth());
+                    const res = await dispatch(checkAuth());
+                    console.log("🚀 ~ Redux-provider ~ checkAuth:", res);
                 } catch {
                     dispatch(setUser(null));
                 }
             };
             loadUser();
-        }, [dispatch]);
+        }, [dispatch, checkAuth]);
 
         return null;
     }

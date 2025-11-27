@@ -43,7 +43,7 @@ export const SocketContextProvider = ({ children }: SocketContextProviderProps) 
                 transports: ['websocket', 'polling'],
                 withCredentials: true,
             });
-            console.log("🚀 ~ SocketContextProvider ~ socketInstance:", socketInstance)
+            // console.log("🚀 ~ SocketContextProvider ~ socketInstance:", socketInstance)
 
             socketInstance.on('connection', () => {
                 console.log('✅ Socket connected:', socketInstance.id);
@@ -67,7 +67,7 @@ export const SocketContextProvider = ({ children }: SocketContextProviderProps) 
 
             // Cleanup on unmount
             return () => {
-                console.log('🧹 Cleaning up socket connection');
+                // console.log('🧹 Cleaning up socket connection');
                 socketInstance.close();
             };
         } else {
